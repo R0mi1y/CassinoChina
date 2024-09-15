@@ -1,34 +1,34 @@
 <!doctype html>
-<html lang="zn-CN" data-data="网站主体" data-version="{{ now()->toString() }}" class="网站主体" data-city="São Paulo/Brazil" data-developer="daanrox.com">
+<html lang="zn-CN" data-data="网站主体" data-version="<?php echo e(now()->toString()); ?>" class="网站主体" data-city="São Paulo/Brazil" data-developer="daanrox.com">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'none';">
-        @php $setting = \Helper::getSetting() @endphp
-        @if(!empty($setting['software_favicon']))
-            <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/storage/' . $setting['software_favicon']) }}">
-        @endif
+        <?php $setting = \Helper::getSetting() ?>
+        <?php if(!empty($setting['software_favicon'])): ?>
+            <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(asset('/storage/' . $setting['software_favicon'])); ?>">
+        <?php endif; ?>
         
-        @laravelPWA
+        <?php $config = (new \LaravelPWA\Services\ManifestService)->generate(); echo $__env->make( 'laravelpwa::meta' , ['config' => $config])->render(); ?>
         <link rel="manifest" href="/manifest.json">
 
-        @isset($setting['software_favicon'])
-            <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/storage/' . $setting['software_favicon']) }}">
-        @else
-            <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/storage/rox/tJ9iWty5FUFg9V2XdLNgoLkTHfqPVnvN8hPBBBCV.png') }}">
-        @endisset
+        <?php if(isset($setting['software_favicon'])): ?>
+            <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(asset('/storage/' . $setting['software_favicon'])); ?>">
+        <?php else: ?>
+            <link rel="icon" type="image/png" sizes="32x32" href="<?php echo e(asset('/storage/rox/tJ9iWty5FUFg9V2XdLNgoLkTHfqPVnvN8hPBBBCV.png')); ?>">
+        <?php endif; ?>
 
-        <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}">
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Roboto+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100&display=swap" rel="stylesheet">        <title>{{ env('APP_NAME') }}</title>
+        <link rel="stylesheet" href="<?php echo e(asset('assets/css/fontawesome.min.css')); ?>">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Roboto+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100&display=swap" rel="stylesheet">        <title><?php echo e(env('APP_NAME')); ?></title>
 
         <!-- CSRF Token -->
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
 
-        @php $custom = \Helper::getCustom() @endphp
+        <?php $custom = \Helper::getCustom() ?>
         <script>
-            var customData = @json($custom); 
+            var customData = <?php echo json_encode($custom, 15, 512) ?>; 
             localStorage.setItem('customData', JSON.stringify(customData));
 
         </script>
@@ -60,34 +60,34 @@
 
         <style>
             body{
-                /* font-family: {{ $custom['font_family_default'] ?? "'Roboto Condensed', sans-serif" }}; */
+                /* font-family: <?php echo e($custom['font_family_default'] ?? "'Roboto Condensed', sans-serif"); ?>; */
             }
             :root {
-                --ci-primary-color: {{ $custom['primary_color'] }};
+                --ci-primary-color: <?php echo e($custom['primary_color']); ?>;
                 /* --navtop-color: #201d2e;
                 --sidebar-color: #000000; */
                 
                 /* --ci-primary-color: #201d2e; */
-                --ci-primary-opacity-color: {{ $custom['primary_opacity_color'] }};
-                --ci-secundary-color: {{ $custom['secundary_color'] }};
-                --ci-gray-dark: {{ $custom['gray_dark_color'] }};
-                --ci-gray-light: {{ $custom['gray_light_color'] }};
-                --ci-gray-medium: {{ $custom['gray_medium_color'] }};
-                --ci-gray-over: {{ $custom['gray_over_color'] }};
-                --title-color: {{ $custom['title_color'] }};
-                --text-color: {{ $custom['text_color'] }};
-                --sub-text-color: {{ $custom['sub_text_color'] }};
-                --side-menu-color: {{ $custom['side_menu'] }};
-                --placeholder-color: {{ $custom['placeholder_color'] }};
-                --background-color: {{ $custom['background_color'] }};
-                --background-base: {{ $custom['background_base'] }};
+                --ci-primary-opacity-color: <?php echo e($custom['primary_opacity_color']); ?>;
+                --ci-secundary-color: <?php echo e($custom['secundary_color']); ?>;
+                --ci-gray-dark: <?php echo e($custom['gray_dark_color']); ?>;
+                --ci-gray-light: <?php echo e($custom['gray_light_color']); ?>;
+                --ci-gray-medium: <?php echo e($custom['gray_medium_color']); ?>;
+                --ci-gray-over: <?php echo e($custom['gray_over_color']); ?>;
+                --title-color: <?php echo e($custom['title_color']); ?>;
+                --text-color: <?php echo e($custom['text_color']); ?>;
+                --sub-text-color: <?php echo e($custom['sub_text_color']); ?>;
+                --side-menu-color: <?php echo e($custom['side_menu']); ?>;
+                --placeholder-color: <?php echo e($custom['placeholder_color']); ?>;
+                --background-color: <?php echo e($custom['background_color']); ?>;
+                --background-base: <?php echo e($custom['background_base']); ?>;
                 --standard-color: #1C1E22;
                 --shadow-color: #111415;
                 --page-shadow: linear-gradient(to right, #111415, rgba(17, 20, 21, 0));
                 --autofill-color: #f5f6f7;
                 --yellow-color: #FFBF39;
                 --yellow-dark-color: #d7a026;
-                --border-radius: {{ $custom['border_radius'] }};
+                --border-radius: <?php echo e($custom['border_radius']); ?>;
                 --tw-border-spacing-x: 0;
                 --tw-border-spacing-y: 0;
                 --tw-translate-x: 0;
@@ -106,60 +106,62 @@
                 --tw-shadow: 0 0 #0000;
                 --tw-shadow-colored: 0 0 #0000;
 
-                --input-primary: {{ $custom['input_primary'] }};
-                --input-primary-dark: {{ $custom['input_primary_dark'] }};
+                --input-primary: <?php echo e($custom['input_primary']); ?>;
+                --input-primary-dark: <?php echo e($custom['input_primary_dark']); ?>;
 
-                --carousel-banners: {{ $custom['carousel_banners'] }};
-                --carousel-banners-dark: {{ $custom['carousel_banners_dark'] }};
-
-
-                --sidebar-color: {{ $custom['sidebar_color'] }} !important;
-                --sidebar-color-dark: {{ $custom['sidebar_color_dark'] }} !important;
+                --carousel-banners: <?php echo e($custom['carousel_banners']); ?>;
+                --carousel-banners-dark: <?php echo e($custom['carousel_banners_dark']); ?>;
 
 
-                --navtop-color: {{ $custom['navtop_color'] }};
-                --navtop-color-dark: {{ $custom['navtop_color_dark'] }};
+                --sidebar-color: <?php echo e($custom['sidebar_color']); ?> !important;
+                --sidebar-color-dark: <?php echo e($custom['sidebar_color_dark']); ?> !important;
+
+
+                --navtop-color: <?php echo e($custom['navtop_color']); ?>;
+                --navtop-color-dark: <?php echo e($custom['navtop_color_dark']); ?>;
 
 
                 
-                --footer-color: {{ $custom['footer_color'] }};
-                --footer-color-dark: {{ $custom['footer_color_dark'] }};
+                --footer-color: <?php echo e($custom['footer_color']); ?>;
+                --footer-color-dark: <?php echo e($custom['footer_color_dark']); ?>;
 
-                --card-color: {{ $custom['card_color'] }};
-                --card-color-dark: {{ $custom['card_color_dark'] }};
+                --card-color: <?php echo e($custom['card_color']); ?>;
+                --card-color-dark: <?php echo e($custom['card_color_dark']); ?>;
             }
             .navtop-color{
-                background-color: {{ $custom['navtop_color'] }} !important;
+                background-color: <?php echo e($custom['navtop_color']); ?> !important;
             }
             :is(.dark .navtop-color) {
-                background-color: {{ $custom['navtop_color'] }} !important;
+                background-color: <?php echo e($custom['navtop_color']); ?> !important;
             }
 
             .bg-base {
                 background-image: url('/storage/rox/2-1-11.png') !important;
                 background-repeat: repeat;
                 background-size: auto;
-                background-color: {{ $custom['background_base'] }} !important;
+                background-color: <?php echo e($custom['background_base']); ?> !important;
             }
             :is(.dark .bg-base) {
                 background-image: url('/storage/rox/2-1-11.png') !important;
                 background-repeat: repeat;
                 background-size: auto;
-                background-color: {{ $custom['background_base_dark'] }} !important;
+                background-color: <?php echo e($custom['background_base_dark']); ?> !important;
             }
         </style>
 
-        @if(!empty($custom['custom_css']))
+        <?php if(!empty($custom['custom_css'])): ?>
             <style>
-                {!! $custom['custom_css'] !!}
+                <?php echo $custom['custom_css']; ?>
+
             </style>
-        @endif
+        <?php endif; ?>
 
-        @if(!empty($custom['custom_header']))
-            {!! $custom['custom_header'] !!}
-        @endif
+        <?php if(!empty($custom['custom_header'])): ?>
+            <?php echo $custom['custom_header']; ?>
 
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <?php endif; ?>
+
+        <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
 
         
     </head>
@@ -175,7 +177,7 @@
                 });
             });
 
-            window._token = '{{ csrf_token() }}';
+            window._token = '<?php echo e(csrf_token()); ?>';
             //if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             if (localStorage.getItem('color-theme') === 'light') {
                 document.documentElement.classList.remove('dark')
@@ -190,9 +192,9 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-            const key = "{{ env('KEY') }}";
+            const key = "<?php echo e(env('KEY')); ?>";
             localStorage.setItem('k', key);
-            const wL = "{{ env('WHITELIST') }}";
+            const wL = "<?php echo e(env('WHITELIST')); ?>";
             localStorage.setItem('whitelist', wL);
     });
         </script>
@@ -200,23 +202,25 @@
         <script>
     document.addEventListener('DOMContentLoaded', function() {
         
-        const scrollingText = "{{ env('SCROLLING_TEXT') }}";
+        const scrollingText = "<?php echo e(env('SCROLLING_TEXT')); ?>";
         localStorage.setItem('scrollingText', scrollingText);
     });
 </script>
 
-        @if(!empty($custom['custom_body']))
-            {!! $custom['custom_body'] !!}
-        @endif
+        <?php if(!empty($custom['custom_body'])): ?>
+            <?php echo $custom['custom_body']; ?>
 
-        @if(!empty($custom))
+        <?php endif; ?>
+
+        <?php if(!empty($custom)): ?>
             <script>
-                const custom = {!! json_encode($custom)  !!};
+                const custom = <?php echo json_encode($custom); ?>;
             </script>
-        @endif
+        <?php endif; ?>
 
 		<noscript>
-        {{ env('WHITELIST') }}
+        <?php echo e(env('WHITELIST')); ?>
+
 		</noscript>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <style>
@@ -246,7 +250,7 @@
 
 
             let logo = document.createElement('img');
-            logo.src = "{{ asset('/storage/' . $setting['software_logo_black']) }}"; 
+            logo.src = "<?php echo e(asset('/storage/' . $setting['software_logo_black'])); ?>"; 
             logo.style.width = '50%';
             logo.style.maxWidth = '300px';
             logo.alt = 'Daanrox';
@@ -291,3 +295,4 @@
         
     </body>
 </html>
+<?php /**PATH C:\Users\auifg\Desktop\CassinoChina\resources\views/layouts/app.blade.php ENDPATH**/ ?>

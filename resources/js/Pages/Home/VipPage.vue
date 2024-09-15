@@ -185,7 +185,7 @@ export default {
     methods: {
         loadingVipTab: function() {
             const tabsElement = document.getElementById('tabs-vip');
-            console.log(tabsElement);
+            // console.log(tabsElement);
             if(tabsElement) {
                 const tabElements = [
                     {

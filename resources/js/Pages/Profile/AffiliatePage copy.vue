@@ -1819,7 +1819,7 @@ export default {
                         response.data.wallet.refer_rewards;
                     this.completeData = response.data;
 
-                    console.log(this.completeData);
+                    // console.log(this.completeData);
                 } else {
                     await this.generateCode();
                 }
@@ -1932,7 +1932,7 @@ export default {
 
     HttpApi.post("profile/affiliates/request", _this.withdrawalForm)
         .then((response) => {
-            console.log("Success Response:", response);  // Debugging
+            // console.log("Success Response:", response);  // Debugging
             _this.opemModalWithdrawal();
             _toast.success(_this.$t(response.data.message));
             _this.isLoading = false;

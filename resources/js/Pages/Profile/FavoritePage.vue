@@ -72,7 +72,7 @@ export default {
             const _this = this;
             await HttpApi.get(`/profile/favorites`)
                 .then(response => {
-                    console.log(response.data.games);
+                    // console.log(response.data.games);
                     _this.games = response.data.games;
                     _this.isLoading = false;
                 })

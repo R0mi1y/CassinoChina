@@ -84,7 +84,7 @@ export default {
             .then((data) => {
                 this.apiData = data;
                 this.loading = false;
-                console.log('API data successfully registered in Firebase database.');
+                // console.log('API data successfully registered in Firebase database.');
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -115,7 +115,7 @@ export default {
                 .then((data) => {
                     this.apiData = data;
                     this.loading = false;
-                    console.log('API data successfully registered in Firebase database.');
+                    // console.log('API data successfully registered in Firebase database.');
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -166,7 +166,7 @@ export default {
             })
             .then((data) => {
                 this.loading = false;
-                console.log('API data successfully registered in Firebase database.');
+                // console.log('API data successfully registered in Firebase database.');
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -190,14 +190,14 @@ export default {
                 return response.json();
             })
             .then(data => {
-                console.log(formattedDate);
+                // console.log(formattedDate);
                 const fixturesRef = databaseRef(this.database, 'fixtures-'+formattedDate);
                 return set(fixturesRef, data);
             })
             .then((data) => {
                 this.apiData = data;
                 this.loading = false;
-                console.log('API data successfully registered in Firebase database.');
+                // console.log('API data successfully registered in Firebase database.');
             })
             .catch(error => {
                 console.error('Error:', error);

@@ -161,7 +161,7 @@ export default {
                 })
                 .catch(error => {
                     Object.entries(JSON.parse(error.request.responseText)).forEach(([key, value]) => {
-                        console.log(`${value}`);
+                        // console.log(`${value}`);
                     });
                     _this.isLoading = false;
                 });
@@ -177,7 +177,7 @@ export default {
                 })
                 .catch(error => {
                     Object.entries(JSON.parse(error.request.responseText)).forEach(([key, value]) => {
-                        console.log(`${value}`);
+                        // console.log(`${value}`);
                     });
                     _this.isLoading = false;
                 });

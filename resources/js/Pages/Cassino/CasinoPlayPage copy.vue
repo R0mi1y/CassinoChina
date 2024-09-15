@@ -59,7 +59,7 @@ export default {
             pageOnly: false,
         })
         function togglefullscreen() {
-            console.log("CLICOU");
+            // console.log("CLICOU");
             state.fullscreen = !state.fullscreen
         }
 

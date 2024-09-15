@@ -246,7 +246,7 @@ export default {
             try {
                 const response = await HttpApi.get("/profile/");
                 const user = response.data.user;
-                // console.log(user)
+                // // console.log(user)
                 if (user) {
                     this.idUser = user.id;
                     this.userName = user.name;

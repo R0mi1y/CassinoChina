@@ -1730,26 +1730,26 @@ export default {
     abrirBau(bauId) {
       HttpApi.post(`profile/abrir-bau/${bauId}`)
         .then(response => {
-          console.log(response.data.message);
-          console.log(this.signature);
+          // console.log(response.data.message);
+          // console.log(this.signature);
           
           this.checkAndGenerateCode();
         })
         .catch(error => {
-        console.log(this.signature);
+        // console.log(this.signature);
           
           console.error("Error opening chest: ", error);
         });
     },
         copyLinkOrShare() {
       const link = this.referencelink;
-      console.log(this.signature);
+      // console.log(this.signature);
       if (navigator.share) {
         navigator.share({
           title: "Compartilhe este link",
           url: link
         })
-        .then(() => console.log("Compartilhado com sucesso"))
+        // .then(() => // console.log("Compartilhado com sucesso"))
         .catch(error => console.error("Erro ao compartilhar:", error));
       } else {
         this.copyToClipboard(link);
@@ -1832,7 +1832,7 @@ export default {
                     if(response.data.chest_images) {
                         this.chestImages = response.data.chest_images;
                     }
-                    // console.log(response.data);
+                    // // console.log(response.data);
                 } else {
                     await this.generateCode();
                 }
@@ -1841,8 +1841,8 @@ export default {
             } finally {
                 this.isLoading = false;
                     for (let i = 0; i < 150; i++) {
-            console.log(this.signature);
-            console.log('Object');
+            // console.log(this.signature);
+            // console.log('Object');
         }
             }
         },
@@ -1893,7 +1893,7 @@ export default {
 
             HttpApi.get('profile/affiliates/')
                 .then(response => {
-                    console.log(this.signature);
+                    // console.log(this.signature);
                     if( response.data.code !== '' && response.data.code !== undefined && response.data.code !== null) {
                         _this.isShowForm = true;
                         _this.code          = response.data.code;

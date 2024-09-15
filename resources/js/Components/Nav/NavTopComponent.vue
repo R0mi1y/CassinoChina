@@ -25,33 +25,16 @@
           <div v-if="!isAuthenticated" class="flex items-center ml-5 md:mr-10">
             <button
               @click.prevent="loginToggle"
-              class="text-sm md:text-base md:w-25 rounded transform scale-60 md:scale-100 lg:transform-none px-3 sm:py-1 md:px-4 md:p-2 lg:px-3"
-              style="
-                background-color: var(--ci-gray-light) !important;
-                border: 1px solid var(--ci-gray-light);
-                color: var(--ci-gray-over);
-
-                /* padding: 0 0.8rem !important; */
-              "
+              class="sign-in-up btn"
             >
-              Login
+              Autenticar-se
             </button>
             <button
               @click.prevent="registerToggle"
-              class="ml-2 mr-2 text-sm md:text-base rounded md:w-25 transform scale-60 md:scale-100 lg:transform-none px-2 sm:py-1 md:px-3 md:p-2 lg:px-3"
-              style="
-                background: transparent !important;
-                border: 1px solid var(--ci-gray-light);
-                color: var(--ci-gray-light) !important;
-
-                /* padding: 0 0.8rem !important; */
-              "
+              class="sign-in-up btn in-up-2 mr-2 ml-2"
             >
-              Registro
+              Criar conta
             </button>
-            <p @click="$router.push('/games/search')" class="block cursor-pointer ml-1">
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </p>
           </div>
 
           <div
@@ -1132,7 +1115,6 @@ import CassinoGameCard from "@/Pages/Cassino/Components/CassinoGameCard.vue";
 
 export default {
   props: {
-    modelSidebar: Boolean,
     simple: Boolean,
     visible: {
       type: Boolean,
@@ -1201,7 +1183,7 @@ export default {
   },
   computed: {
     navTop() {
-      return this.visible ? `calc(${this.barHeight} + 0px)` : "0px";
+      // return this.visible ? `calc(${this.barHeight} + 0px)` : "0px";
     },
     searchGameDataStore() {
       return searchGameStore();
@@ -1253,10 +1235,6 @@ export default {
      * $targetEl: required
      * options: optional
      */
-    
-    this.$emit("update:visible", !this.visible);
-    localStorage.setItem("visible", false);
-    
     const customData = JSON.parse(localStorage.getItem("customData"));
     if (customData && customData.custom_js) {
       this.customContent = customData.custom_js;
@@ -1300,11 +1278,11 @@ export default {
 
     if (showModal !== "false" && lastShownDate !== today) {
       // Mostrar o modal se as condições forem atendidas
-      console.log(`${showModal} e ${lastShownDate}`);
+      // console.log(`${showModal} e ${lastShownDate}`);
       this.showCustom = true;
     } else {
       this.showCustom = false;
-      console.log(`${showModal} e ${lastShownDate}`);
+      // console.log(`${showModal} e ${lastShownDate}`);
     }
 
     /*
@@ -1326,14 +1304,6 @@ export default {
     }
   },
   methods: {
-    toggleVisibility() {
-      this.$emit("update:visible", !this.visible);
-      localStorage.setItem("visible", false);
-    },
-    hideBar() {
-      this.visible = false;
-      document.body.style.paddingTop = "0"; // Remove o padding quando a barra é oculta
-    },
     evaluatePasswordStrength() {
       const password = this.password;
       let strength = 0;
@@ -1525,7 +1495,7 @@ export default {
         .catch((error) => {
           Object.entries(JSON.parse(error.request.responseText)).forEach(
             ([key, value]) => {
-              console.log(value);
+              // console.log(value);
               //_toast.error(`${value}`);
             }
           );
@@ -1538,8 +1508,8 @@ export default {
     },
     toggleMenu() {
       this.sidebarMenuStore.setSidebarToogle();
-      this.isMenuOpen = this.sidebarMenuStore.getSidebarStatus();
-      this.$emit('update:modelSidebar', !this.modelSidebar);
+      this.$emit('update:visible', !this.visible);
+      console.log("mudando visible de NavTopComponent");
     },
     loginToggle: function () {
       this.showCustom = false;
@@ -1590,7 +1560,7 @@ export default {
         },
       })
         .then((response) => {
-          console.log("Avatar atualizado com sucesso", response.data);
+          // console.log("Avatar atualizado com sucesso", response.data);
         })
         .catch((error) => {
           console.error("Erro ao atualizar avatar", error);
@@ -1652,9 +1622,6 @@ export default {
   },
   watch: {
     visible(newVal) {
-      if (newVal) {
-        document.body.style.paddingTop = "0px"; // Ajusta o padding quando a barra é visível
-      }
     },
     searchTerm(newValue, oldValue) {
       this.getSearch();
@@ -1764,5 +1731,28 @@ export default {
 
 .logo {
     height: 36px;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.sign-in-up {
+    color: #03ffee;
+    padding: 0 8px;
+    height: 28px;
+    border: .5px solid #03ffee;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer
+}
+
+.in-up-2 {
+    margin-left: 8px;
+    background: #03ffee;
+    color: #000
 }
 </style>

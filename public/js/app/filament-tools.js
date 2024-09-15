@@ -18217,7 +18217,7 @@
           return this.stackToTree(finished);
         if (this.parser.strict) {
           if (verbose && stopped)
-            console.log("Stuck with token " + (this.tokens.mainToken ? this.parser.getName(this.tokens.mainToken.value) : "none"));
+            // console.log("Stuck with token " + (this.tokens.mainToken ? this.parser.getName(this.tokens.mainToken.value) : "none"));
           throw new SyntaxError("No parse at " + pos);
         }
         if (!this.recovering)
@@ -18277,7 +18277,7 @@
           if (match2 > -1 && cached.length && (!strictCx || (cached.prop(NodeProp.contextHash) || 0) == cxHash)) {
             stack.useNode(cached, match2);
             if (verbose)
-              console.log(base2 + this.stackID(stack) + ` (via reuse of ${parser6.getName(cached.type.id)})`);
+              // console.log(base2 + this.stackID(stack) + ` (via reuse of ${parser6.getName(cached.type.id)})`);
             return true;
           }
           if (!(cached instanceof Tree) || cached.children.length == 0 || cached.positions[0] > 0)
@@ -18293,7 +18293,7 @@
       if (defaultReduce > 0) {
         stack.reduce(defaultReduce);
         if (verbose)
-          console.log(base2 + this.stackID(stack) + ` (via always-reduce ${parser6.getName(defaultReduce & 65535)})`);
+          // console.log(base2 + this.stackID(stack) + ` (via always-reduce ${parser6.getName(defaultReduce & 65535)})`);
         return true;
       }
       if (stack.stack.length >= 15e3) {
@@ -18307,7 +18307,7 @@
         let localStack = last ? stack : stack.split();
         localStack.apply(action, term, end);
         if (verbose)
-          console.log(base2 + this.stackID(localStack) + ` (via ${(action & 65536) == 0 ? "shift" : `reduce of ${parser6.getName(action & 65535)}`} for ${parser6.getName(term)} @ ${start}${localStack == stack ? "" : ", split"})`);
+          // console.log(base2 + this.stackID(localStack) + ` (via ${(action & 65536) == 0 ? "shift" : `reduce of ${parser6.getName(action & 65535)}`} for ${parser6.getName(term)} @ ${start}${localStack == stack ? "" : ", split"})`);
         if (last)
           return true;
         else if (localStack.pos > start)
@@ -18339,7 +18339,7 @@
           restarted = true;
           stack.restart();
           if (verbose)
-            console.log(base2 + this.stackID(stack) + " (restarted)");
+            // console.log(base2 + this.stackID(stack) + " (restarted)");
           let done = this.advanceFully(stack, newStacks);
           if (done)
             continue;
@@ -18347,7 +18347,7 @@
         let force = stack.split(), forceBase = base2;
         for (let j = 0; force.forceReduce() && j < 10; j++) {
           if (verbose)
-            console.log(forceBase + this.stackID(force) + " (via force-reduce)");
+            // console.log(forceBase + this.stackID(force) + " (via force-reduce)");
           let done = this.advanceFully(force, newStacks);
           if (done)
             break;
@@ -18356,7 +18356,7 @@
         }
         for (let insert2 of stack.recoverByInsert(token)) {
           if (verbose)
-            console.log(base2 + this.stackID(insert2) + " (via recover-insert)");
+            // console.log(base2 + this.stackID(insert2) + " (via recover-insert)");
           this.advanceFully(insert2, newStacks);
         }
         if (this.stream.end > stack.pos) {
@@ -18366,7 +18366,7 @@
           }
           stack.recoverByDelete(token, tokenEnd);
           if (verbose)
-            console.log(base2 + this.stackID(stack) + ` (via recover-delete ${this.parser.getName(token)})`);
+            // console.log(base2 + this.stackID(stack) + ` (via recover-delete ${this.parser.getName(token)})`);
           pushStackDedup(stack, newStacks);
         } else if (!finished || finished.score < stack.score) {
           finished = stack;

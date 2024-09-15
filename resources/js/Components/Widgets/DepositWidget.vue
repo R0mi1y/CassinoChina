@@ -540,7 +540,7 @@ export default {
       this.isLoadingWallet = true;
       HttpApi.get('profile/wallet')
         .then(response => {
-          console.log(response)
+          // console.log(response)
           this.wallet = response.data.wallet;
           this.currency = response.data.wallet.currency;
           this.isLoadingWallet = false;

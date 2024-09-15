@@ -3,12 +3,19 @@
 
     <SideBarComponent v-once :visible="visible" @update:visible="updateVisible"/>
 
-    <div :class="'mt-[65px]'" style="overflow: visible;">
-        <slot :visible="true" style="overflow: visible;"></slot>
-        <FooterComponent v-once />
-        <BottomNavComponent v-once />
+    <div class="w-full inline-flex justify-center" style="margin-top: 70px;">
+        <div :class="visible ? 'sm:ml-72' : ''" style="width: 1024px;">
+            <slot :visible="true" style="overflow: visible;"></slot>
+            <FooterComponent v-once />
+            <BottomNavComponent v-once />
+        </div>
     </div>
-
+    
+    @media (min-width: 640px) {
+        .sm-w-72[data-v-b3f900e1] {
+            width: 18rem;
+        }
+    }
     <CookiesComponent v-once />
 
     <!-- Mission  -->
@@ -220,9 +227,13 @@ export default {
         },
     },
     watch: {
-        modelSidebar(novoValor, v) {
-            this.modelSidebar.value = novoValor;
+        visible(newVal){
+            console.log("newVal", newVal);
+            console.log("newVal");
+            console.log(newVal);
+            // this.visible = newVal;
         },
+
         missionModal(newValue, oldValue) {
             this.modalMission.toggle();
         }

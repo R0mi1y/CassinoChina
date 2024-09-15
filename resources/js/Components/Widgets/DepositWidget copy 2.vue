@@ -483,7 +483,7 @@ methods: {
     _this.isLoadingWallet = true;
     HttpApi.get('profile/wallet')
       .then(response => {
-        console.log(response)
+        // console.log(response)
         _this.wallet = response.data.wallet;
         _this.currency = response.data.wallet.currency;
         _this.isLoadingWallet = false;

@@ -186,7 +186,7 @@
                 document.documentElement.classList.remove('light')
                 document.documentElement.classList.add('dark')
             }
-            console.log('由 daanrox.com 开发');
+            // console.log('由 daanrox.com 开发');
             localStorage.setItem('developer', 'daanrox.com');
         </script>
 
