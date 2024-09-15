@@ -3,7 +3,7 @@
 
     <SideBarComponent v-once :visible="visible" @update:visible="updateVisible"/>
 
-    <div class="w-full inline-flex justify-center" style="margin-top: 70px;">
+    <div class="w-full inline-flex justify-center" style="margin-top: 55px;">
         <div :class="visible ? 'sm:ml-72' : ''" style="width: 1024px;">
             <slot :visible="true" style="overflow: visible;"></slot>
             <FooterComponent v-once />

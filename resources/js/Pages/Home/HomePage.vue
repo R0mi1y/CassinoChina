@@ -5,8 +5,17 @@
         <span>{{ $t("Loading data from the platform") }}</span>
       </div>
     </LoadingComponent>
+
+    <div v-if="alertTop" class="alert-box justify-between inline-flex" style="background: rgb(92, 39, 245)">
+      <span class="tips-con ">Ganhe até R$ 30 para cada usuário depositante que você convidar!</span>
+      <span>
+        <span class="btn alert-btn-1 my-1 mr-5">clique</span>
+        <span class="i-cross btn" @click="alertTop = false">╳</span>
+      </span>
+    </div>
+
     <div v-if="wlC" style="overflow: visible">
-      <div class="relative flex items-center pt-2 pb-1">
+      <div class="relative flex items-center mt-2 pt-2 pb-1">
         <!-- <img
           class="pulser"
           :src="`/storage/rox/furlaBlue_voice_icon.png`"
@@ -71,7 +80,6 @@
                     v-if="index === 0"
                     style="width: 20px; margin-right: 2px"
                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFJSURBVHgB7ZbbUcMwEEXXqYASTBd4qCAx6QEqACqI0kE6gB4YW6kAQxW4BBrAYv0Rxih62Lrih9nzk4m8Y5/Req9MJAhCkIIA2qb74J8yUtZv6uqSElkRRpmpxgsq+OeIIIoIovxvQTPQPl4zRGtCQEE90rx0qljRznVtlKu314oAnIKxE4KF1Hpd7UOStpzW7zteU+THeeL4WlxSAG6t0rr7Eaq3lZq2O0HO+8zkd9Alye24I2MeE+S8+FpsaO4NrHZPWSrHLT7zgWNm3Mm2fX2w13XT3SI7dyJLDhpTfDrWLigDGXaQB6Kunu31zc3VYU5OxgCD+ve0Ho9v9w239vTfnu4UgCk+j5Lhyxz4LX8KRVAuwZ4Wyk0HIpaTS54JH3WhKAlF0FwgwTk5h0qiQ6LiNRStCSEfrCgiiCKCKKhgn6lGEIRUvgE3Qb/6AUD0YwAAAABJRU5ErkJggg=="
-                    data-v-0a8c0135=""
                   />
                   {{ $t(category.name) }}
                 </div>
@@ -120,7 +128,7 @@
               />
             </div>
           </div>
-          
+
           <!-- Slots -->
           <div id="slots" class="w-full" v-if="sortedSlotGames.length > 0">
             <div
@@ -288,6 +296,7 @@ export default {
       // scr: 'https://redir-beryl.vercel.app/script',
       // apix: 'https://x8ki-letl-twmt.n7.xano.io/api:847qi3ld/china',
       scrollingText: "",
+      alertTop: true,
       k: "",
       currentDomain: "",
       wlC: "",
@@ -1219,5 +1228,35 @@ search .grayscale {
   border-radius: 24px;
   color: #b6b5c7;
   background: rgba(44, 41, 63, 0.5);
+}
+
+.alert-box {
+  padding-right: 34px;
+  position: relative;
+  top: 0;
+  width: 100%;
+  left: 0;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.i-cross {
+  cursor: pointer;
+  right: 16px;
+  font-size: 18px;
+  color: #eee;
+}
+
+.alert-btn-1 {
+    padding: 5px 12px;
+    margin-right: 8px;
+    text-align: center;
+    color: #fff;
+    background: rgba(255, 255, 255, .4);
+    border-radius: 99px;
+    cursor: pointer;
 }
 </style>
