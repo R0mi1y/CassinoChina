@@ -6,16 +6,10 @@
     <div class="w-full inline-flex justify-center" style="margin-top: 55px;">
         <div :class="visible ? 'sm:ml-72' : ''" style="width: 1024px;">
             <slot :visible="true" style="overflow: visible;"></slot>
-            <FooterComponent v-once />
+            <FooterComponent v-once v-if="showFooter"/>
             <BottomNavComponent v-once />
         </div>
     </div>
-    
-    @media (min-width: 640px) {
-        .sm-w-72[data-v-b3f900e1] {
-            width: 18rem;
-        }
-    }
     <CookiesComponent v-once />
 
     <!-- Mission  -->
@@ -117,7 +111,12 @@ import MissionWeekly from "@/Pages/Home/Components/MissionWeekly.vue";
 import {searchGameStore} from "@/Stores/SearchGameStore.js";
 
 export default {
-    props: [],
+    props: {
+        footer: {
+            type: Boolean,
+            default: true
+        },
+    },
     components: {
         MissionWeekly,
         MissionDaily,
@@ -143,6 +142,9 @@ export default {
         });
     },
     computed: {
+        showFooter() {
+            return this.footer;
+        },
         sidebarMenuStore() {
             return sidebarStore();
         },

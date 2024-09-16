@@ -800,10 +800,6 @@ export default {
     this.fetchEnvVariables();
   },
   mounted() {
-    if (localStorage.getItem("visible") !== null) {
-      this.visible = JSON.parse(localStorage.getItem("visible"));
-    }
-
     window.addEventListener("storage", (event) => {
       if (event.key === "visible") {
         this.visible = JSON.parse(event.newValue);
