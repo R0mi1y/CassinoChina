@@ -65,7 +65,7 @@
             :root {
                 --ci-primary-color: <?php echo e($custom['primary_color']); ?>;
                 /* --navtop-color: #201d2e;
-                --sidebar-color: #000000; */
+                --sidebar-color: #0d0b12; */
                 
                 /* --ci-primary-color: #201d2e; */
                 --ci-primary-opacity-color: <?php echo e($custom['primary_opacity_color']); ?>;
@@ -147,6 +147,7 @@
                 background-size: auto;
                 background-color: <?php echo e($custom['background_base_dark']); ?> !important;
             }
+            
         </style>
 
         <?php if(!empty($custom['custom_css'])): ?>
@@ -271,8 +272,11 @@
 
             
             function removeLoadingScreen() {
-                loadingScreen.style.display = 'none';
-                document.getElementById('content').style.display = 'block';
+                if (loadingScreen) {
+                    loadingScreen.style.display = 'none';
+                    var content = document.getElementById('content');
+                    if (content) content.style.display = 'block';
+                }
             }
 
             setTimeout(function() {

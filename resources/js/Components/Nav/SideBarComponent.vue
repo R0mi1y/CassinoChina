@@ -2,8 +2,10 @@
   <aside
     :class="[
       sidebar ? '-translate-x-full' : 'translate-x-0',
-      'transition-transform duration-300 ease-in-out fixed z-1000 top-0 md:top-[60px] left-0 bg-green-500 w-fit max-w-[50%] overflow-y-auto aside-style',
+      'transition-transform duration-300 ease-in-out fixed z-1000 top-0 md:top-[60px] left-0 bg-green-500 w-fit overflow-y-auto aside-style',
+      widthMenor1330 ? 'w-full' : ''
     ]"
+    style="background-color: rgba(0, 0, 0, 0.85);"
     aria-label="Sidebar"
   >
     <div class="sm-w-72 h-full md:h-full overflow-y-auto sidebar-color">
@@ -405,7 +407,7 @@
 </template>
 
 <script>
-import { onMounted, onBeforeUnmount, ref, watch } from "vue";
+import { onMounted, onBeforeUnmount, ref, watch, beforeDestroy } from "vue";
 import { sidebarStore } from "@/Stores/SideBarStore.js";
 import { RouterLink } from "vue-router";
 import axios from "axios";
@@ -423,6 +425,8 @@ export default {
   components: { RouterLink },
   data() {
     return {
+      screenWidth: window.innerWidth,
+      widthMenor1330: window.innerWidth < 1330,
       isActivityOpen: true,
       deferredPrompt: null,
       showButton: false,
@@ -470,9 +474,9 @@ export default {
     };
   },
   setup() {
-    const screenWidth = ref(window.innerWidth);
     const deferredPrompt = ref(null);
     const showButton = ref(false);
+    const widthMenor1330 = ref(true);
     const isPlaying = ref(false);
     const playIconClass = ref("fa-play");
     const audioSource = ref("/storage/rox/musics/1rox.mp3");
@@ -491,14 +495,8 @@ export default {
     const rangeValue = ref(30);
     const ping = ref(null);
     const latencia = ref(null);
-
-    const updateScreenWidth = () => {
-      screenWidth.value = window.innerWidth;
-    };
-
+    
     onMounted(() => {
-      window.addEventListener("resize", updateScreenWidth);
-
       window.addEventListener("beforeinstallprompt", (e) => {
         e.preventDefault();
         deferredPrompt.value = e;
@@ -507,20 +505,12 @@ export default {
 
       window.addEventListener("appinstalled", () => {
         showButton.value = false;
-        // console.log('PWA foi instalado');
+        console.log('PWA foi instalado');
       });
-
-      // Initial setup
-      fetchEnvVariables();
-      getSetting();
-      setupMutationObserver();
     });
-
-    onBeforeUnmount(() => {
-      window.removeEventListener("resize", updateScreenWidth);
-    });
-
-    // Your methods here...
+  },
+  beforeDestroy () {
+    window.removeEventListener("resize", this.updateScreenWidth);
   },
   computed: {
     navTop() {
@@ -553,6 +543,8 @@ export default {
     shouldShowMusics() {
       return this.musicSelector && (this.screenWidth > 480 || this.sidebar);
     },
+    
+    
   },
   methods: {
     async installPWA() {
@@ -568,6 +560,16 @@ export default {
         this.showButton = false;
       }
     },
+    updateScreenWidth() {
+      const isWidthLessThan1330 = window.innerWidth < 1330;
+      this.screenWidth = window.innerWidth;
+      
+      if (isWidthLessThan1330 !== this.widthMenor1330) {
+        this.widthMenor1330 = isWidthLessThan1330;
+        this.sidebarMenuStore.setSidebarStatus(isWidthLessThan1330);
+        this.$emit("update:visible", !isWidthLessThan1330);
+      }
+    },
     closeMusicModal() {
       this.toogleMusics();
       this.sideSelector = false;
@@ -575,30 +577,9 @@ export default {
     updateRange(event) {
       const audio = this.$refs.audioPlayer;
       const volume = event.target.value / 100;
-      audio.volume = volume;
+      if (audio) audio.volume = volume;
       event.target.style.setProperty("--value", event.target.value);
     },
-    // async calcularLatencia() {
-    //   try {
-    //     const start = Date.now();
-    //     await fetch('https://ws.suitpay.app/api/v1/gateway/pix-payment');
-    //     const end = Date.now();
-    //     const ping = end - start;
-    //     this.latencia = ping * 0.4;
-    //     this.latencia = parseInt(this.latencia);
-
-    //     if (this.latencia < 80) {
-    //       this.pingImage = '/storage/rox/ping3.png';
-    //     } else if (this.latencia >= 80 && this.latencia < 150) {
-    //       this.pingImage = '/storage/rox/ping2.png';
-    //     } else {
-    //       this.pingImage = '/storage/rox/ping1.png';
-    //     }
-    //   } catch (error) {
-    //     console.error('Erro ao calcular latência:', error);
-    //     this.latencia = 115;
-    //   }
-    // },
     toogleMusics() {
       this.musicSelector = !this.musicSelector;
       if (this.musicSelector) {
@@ -710,7 +691,6 @@ export default {
     toggleMenu() {
       this.sidebarMenuStore.setSidebarToogle();
       this.$emit("update:visible", !this.visible);
-      console.log("mudando visible de SideBarComponent");
     },
     toggleActivity() {
       this.isActivityOpen = !this.isActivityOpen;
@@ -727,11 +707,11 @@ export default {
       const audio = this.$refs.audioPlayer;
 
       if (!this.isPlaying) {
-        audio.play();
+        if (audio) audio.play();
         this.isPlaying = true;
         this.playIconClass = "fa-pause";
       } else {
-        audio.pause();
+        if (audio) audio.pause();
         this.isPlaying = false;
         this.playIconClass = "fa-play";
       }
@@ -759,10 +739,12 @@ export default {
 
       this.audioSource = newSource;
       this.musicName = newName;
-      audio.load();
-
-      if (this.isPlaying) {
-        audio.play();
+      if (audio) {
+        audio.load();
+        
+        if (this.isPlaying) {
+          audio.play();
+        }
       }
     },
     prevMusic() {
@@ -788,10 +770,12 @@ export default {
 
       this.audioSource = newSource;
       this.musicName = newName;
-      audio.load();
-
-      if (this.isPlaying) {
-        audio.play();
+      if (audio) {
+        audio.load();
+        
+        if (this.isPlaying) {
+          audio.play();
+        }
       }
     },
   },
@@ -807,24 +791,27 @@ export default {
     });
 
     const audio = this.$refs.audioPlayer;
-    audio.volume = this.rangeValue / 100;
+    if (audio) {
+      audio.volume = this.rangeValue / 100;
+    }
 
     const rangeInput = this.$refs.rangeInput;
-    rangeInput.style.setProperty("--value", this.rangeValue);
+    if (rangeInput) {
+      rangeInput.style.setProperty("--value", this.rangeValue);
+    }
 
+    window.addEventListener("resize", this.updateScreenWidth);
+    
     this.updateCardImages();
+    this.updateScreenWidth();
+    this.fetchEnvVariables();
+    this.getSetting();
     this.setupMutationObserver();
   },
   watch: {
     sidebarMenu(newVal) {
       this.sidebar = newVal;
     },
-    screenWidth(newWidth) {
-      // Update logic if needed
-    },
-  },
-  beforeUnmount() {
-    // Cleanup code if needed
   },
 };
 </script>
@@ -914,7 +901,8 @@ export default {
 
 @media (min-width: 640px) {
   .sm-w-72 {
-    width: 18rem; /* 288px */
+    /* width: 18rem; 288px */
+    width: 280px;
   }
 }
 
@@ -1150,7 +1138,7 @@ input[type="range"].styled-range {
   box-sizing: border-box;
   overflow: hidden;
   position: relative;
-  width: 240px;
+  width: 100%;
   height: 80px;
   margin-bottom: 8px;
   background: #2d2941;
@@ -1191,7 +1179,7 @@ input[type="range"].styled-range {
   user-select: none;
   box-sizing: border-box;
   overflow: hidden;
-  width: 240px;
+  width: 100%;
   padding: 0 12px;
   background: #2d2941;
   border-radius: 8px;
@@ -1297,7 +1285,7 @@ input[type="range"].styled-range {
   user-select: none;
   -webkit-box-align: center;
   align-items: center;
-  width: 240px;
+  width: 100%;
   height: 56px;
   background: linear-gradient(282.43deg, #362941 1.78%, #2b2b51 100%);
   border-radius: 8px;
@@ -1342,7 +1330,7 @@ input[type="range"].styled-range {
   user-select: none;
   -webkit-box-align: center;
   align-items: center;
-  width: 240px;
+  width: 100%;
   height: 56px;
   background: linear-gradient(282.43deg, #2d2941 1.78%, #2d2941 1.79%, #293741 100%);
   border-radius: 8px;

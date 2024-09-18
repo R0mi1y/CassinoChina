@@ -14,6 +14,7 @@
             <img :src="`/storage/rox/arrow_side_bar.png`" alt="Close Menu">
           </button>
           <img
+            v-show="!widthLessThan450"
             :src="`/storage/rox/logo.png`"
             alt="News"
             class="logo ml-5"
@@ -1120,6 +1121,10 @@ export default {
       type: Boolean,
       required: true,
     },
+    widthLessThan450: {
+      type: Boolean,
+      required: false,
+    }
   },
   components: {
     CassinoGameCard,
@@ -1176,6 +1181,7 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const widthMenor1330 = ref(true);
 
     return {
       router,
@@ -1509,7 +1515,6 @@ export default {
     toggleMenu() {
       this.sidebarMenuStore.setSidebarToogle();
       this.$emit('update:visible', !this.visible);
-      console.log("mudando visible de NavTopComponent");
     },
     loginToggle: function () {
       this.showCustom = false;
@@ -1540,6 +1545,7 @@ export default {
     mounted() {
       this.timer = setInterval(this.updateDate, 1000);
     },
+
     beforeDestroy() {
       clearInterval(this.timer);
     },

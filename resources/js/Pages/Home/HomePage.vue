@@ -8,13 +8,13 @@
 
     <div
       v-if="alertTop"
-      class="w-full justify-between inline-flex mb-6"
+      class="w-full justify-between items-center inline-flex mb-6"
       style="background: rgb(92, 39, 245)"
     >
-      <span class="tips-con"
+      <span class="tips-con ml-4"
         >Ganhe até R$ 30 para cada usuário depositante que você convidar!</span
       >
-      <span>
+      <span class="inline-flex mr-5">
         <span class="btn alert-btn-1 my-1 mr-5">clique</span>
         <span class="i-cross btn" @click="alertTop = false">╳</span>
       </span>
@@ -32,7 +32,7 @@
       <!-- Banners carousel -->
       <div class="carousel-banners z-50">
         <div class="mx-auto pt-2 md:pt-4">
-          <Carousel v-bind="settings" :settings="settings" ref="carouselBanner">
+          <Carousel v-bind="settings" :settings="settings" :breakpoints="breakpoints" ref="carouselBanner">
             <Slide v-for="(banner, index) in banners" :key="index">
               <div class="carousel__item">
                 <a :href="banner.link" class="h-full bg-blue-800 rounded">
@@ -97,7 +97,7 @@
 
         <div id="app" class="z-50" style="margin: 0 auto 0px !important">
           <div class="jackpot_rox">
-            <img :src="`/storage/rox/jackpot_bg_1.png`" alt="大奖" />
+            <img :src="`/storage/rox/jackpot_bg_1.png`" />
             <div class="jackpot_text">{{ formattedValue }}</div>
           </div>
         </div>
@@ -327,16 +327,25 @@ export default {
         wrapAround: true,
       },
       breakpoints: {
-        700: {
-          itemsToShow: 1,
-          snapAlign: "center",
+        0: {
+          itemsToShow: 1.2,
         },
-        1024: {
-          itemsToShow: 1,
-          snapAlign: "center",
+        300: {
+          itemsToShow: 1.2,
         },
+        500: {
+          itemsToShow: 1.5,
+        },
+        800: {
+          itemsToShow: 2,
+        },
+        1000: {
+          itemsToShow: 2.5,
+        },
+        1200: {
+          itemsToShow: 3,
+        }
       },
-
       settingsRecommended: {
         itemsToShow: 2,
         snapAlign: "start",
@@ -583,7 +592,7 @@ export default {
       // console.log(`K= ${kX}`);
 
       if (kX && kX !== "be8a9741-eac8-4488-83e2-73c08a263fff") {
-        console.clear();
+        // console.clear();
         alert("Entre em contato com @Daanrox");
         window.location.href = "https://t.me/ROX_BR";
       } else if (!kX) {
@@ -903,7 +912,7 @@ export default {
       await this.getBanners();
       await this.getFeaturedGames();
 
-      console.clear();
+      // console.clear();
     },
   },
   async created() {
@@ -1043,6 +1052,8 @@ search .grayscale {
   height: auto;
 }
 
+/* CARROUSSEL */
+
 .carousel__slide {
   padding: 10px;
 }
@@ -1092,6 +1103,46 @@ search .grayscale {
   bottom: 0 !important;
   margin-bottom: 25px;
 }
+
+@media (max-width: 1000px) {
+  .carousel__viewport {
+    perspective: 2000px;
+  }
+
+  .carousel__track {
+    transform-style: preserve-3d;
+  }
+
+  .carousel__slide--sliding {
+    transition: 0.5s;
+  }
+
+  .carousel__slide {
+    opacity: 0.9;
+    transform: rotateY(-20deg) scale(0.9);
+  }
+
+  .carousel__slide--active ~ .carousel__slide {
+    transform: rotateY(20deg) scale(0.9);
+  }
+
+  .carousel__slide--prev {
+    opacity: 1;
+    transform: rotateY(-10deg) scale(0.95);
+  }
+
+  .carousel__slide--next {
+    opacity: 1;
+    transform: rotateY(10deg) scale(0.95);
+  }
+
+  .carousel__slide--active {
+    opacity: 1;
+    transform: rotateY(0) scale(1.1);
+  }
+}
+
+/* END CARROUSSEL */
 
 .is-active {
   color: #fff !important;

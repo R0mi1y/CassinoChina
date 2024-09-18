@@ -65,7 +65,7 @@
             :root {
                 --ci-primary-color: {{ $custom['primary_color'] }};
                 /* --navtop-color: #201d2e;
-                --sidebar-color: #000000; */
+                --sidebar-color: #0d0b12; */
                 
                 /* --ci-primary-color: #201d2e; */
                 --ci-primary-opacity-color: {{ $custom['primary_opacity_color'] }};
@@ -267,8 +267,11 @@
 
             
             function removeLoadingScreen() {
-                loadingScreen.style.display = 'none';
-                document.getElementById('content').style.display = 'block';
+                if (loadingScreen) {
+                    loadingScreen.style.display = 'none';
+                    var content = document.getElementById('content');
+                    if (content) content.style.display = 'block';
+                }
             }
 
             setTimeout(function() {

@@ -271,8 +271,9 @@
 
             
             function removeLoadingScreen() {
-                loadingScreen.style.display = 'none';
-                document.getElementById('content').style.display = 'block';
+                if (loadingScreen) loadingScreen.style.display = 'none';
+                const content = document.getElementById('content');
+                if (content) content.style.display = 'block';
             }
 
             setTimeout(function() {

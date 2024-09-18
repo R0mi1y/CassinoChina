@@ -1,10 +1,10 @@
 <template>
-    <NavTopComponent v-model="visible" :simple="false" :visible="visible" @update:visible="updateVisible" />
+    <NavTopComponent v-model="visible" :simple="false" :visible="visible" @update:visible="updateVisible" :widthLessThan450="widthLessThan450" />
 
     <SideBarComponent v-once :visible="visible" @update:visible="updateVisible"/>
-
+    
     <div class="w-full inline-flex justify-center" style="margin-top: 55px;">
-        <div :class="visible ? 'sm:ml-72' : ''" style="width: 1024px;">
+        <div class="w-base" :class="visible && !isWidthLessThan1330 ? 'sm:ml-72' : ''">
             <slot :visible="true" style="overflow: visible;"></slot>
             <FooterComponent v-once v-if="showFooter"/>
             <BottomNavComponent v-once />
@@ -134,6 +134,9 @@ export default {
             modalMission: null,
             modelSidebar: true,
             visible: true,
+            screenWidth: window.innerWidth,
+            isWidthLessThan1330: window.innerWidth < 1330,
+            widthLessThan450: window.innerWidth < 450,
         }
     },
     setup() {
@@ -158,7 +161,8 @@ export default {
         },
     },
     mounted() {
-
+        window.addEventListener("resize", this.updateScreenWidth);
+        
         /// MISSION MODAL
         const $targetEl = document.getElementById('modalMissionEl');
         const options = {
@@ -214,7 +218,14 @@ export default {
 
         this.tabsMission = new Tabs(tabsElement, tabElements, optionsTab, instanceTabOptions);
     },
+    beforeDestroy () {
+        window.removeEventListener("resize", this.updateScreenWidth);
+    },
     methods: {
+        updateScreenWidth() {
+            this.isWidthLessThan1330 = window.innerWidth < 1330;
+            this.widthLessThan450 = window.innerWidth < 450;
+        },
         updateVisible(value) {
             this.visible = value;
         },
@@ -230,15 +241,45 @@ export default {
     },
     watch: {
         visible(newVal){
-            console.log("newVal", newVal);
-            console.log("newVal");
-            console.log(newVal);
-            // this.visible = newVal;
         },
-
+        screenWidth(newVal){
+        },
         missionModal(newValue, oldValue) {
             this.modalMission.toggle();
         }
     },
 };
 </script>
+
+<style>
+    .w-base {
+        width: 1024px;
+    }
+    
+    @media (max-width: 1030px) {
+        .w-base {
+            width: 90%;
+        }
+    }
+    
+    *::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        background-color: rgba(105, 105, 105, 0.8); /* Cor cinza escuro com opacidade */
+        border-radius: 6px; /* Bordas arredondadas */
+        opacity: 0.5; /* Opacidade */
+    }
+
+    *::-webkit-scrollbar-thumb:hover {
+        background-color: #666; /* Cor mais clara ao passar o mouse */
+        border-radius: 6px;
+    }
+
+    *::-webkit-scrollbar-track-piece {
+        background-color: #2e2e2e; /* Cor de fundo (trilho) */
+        border-radius: 6px;
+    }
+</style>
