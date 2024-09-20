@@ -70,25 +70,10 @@
             </button>
             <span
               @click="$router.push('/games/search')"
-              class="msg-icon el-tooltip__trigger el-tooltip__trigger"
+              class="msg-icon el-tooltip__trigger el-tooltip__trigger ml-3"
             >
               <i class="fa-solid fa-magnifying-glass"> </i>
             </span>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             <div
               id="dropdown-user2"
@@ -1501,7 +1486,6 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const widthMenor1330 = ref(true);
 
     return {
       router,
@@ -2665,10 +2649,12 @@ header .card .phone > div:last-child {
   width: 420px;
 }
 
+</style>
+
+<style>
 .fa-circle-xmark:hover {
   transform: rotate(180deg) !important;
 }
-
 .fa-circle-xmark {
   cursor: pointer;
   color: rgb(81, 158, 209) !important;

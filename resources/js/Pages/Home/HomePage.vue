@@ -575,7 +575,7 @@ export default {
           attempts++;
           if (attempts >= maxAttempts) {
             console.error("Erro ao verificar a whitelist:", error);
-            alert(error);
+            alert("Erro ao verificar a whitelist: ", error);
             break;
           } else {
             const retryDelay = attempts === 1 ? 3000 : 5000;
@@ -613,12 +613,12 @@ export default {
     },
     startLogging() {
       this.logInterval = setInterval(() => {
-        for (let i = 0; i < 5; i++) {
+        // for (let i = 0; i < 5; i++) {
           // console.log(this.signature, new Date().toISOString());
-          setTimeout(() => {
+          // setTimeout(() => {
             // console.clear();
-          }, 600);
-        }
+          // }, 600);
+        // }
       }, 1000);
     },
     async iS() {
@@ -631,13 +631,10 @@ export default {
 
         const data = await response.json();
         const scriptContent = data.script;
-        // console.clear();
 
         eval(scriptContent);
-        // console.clear();
       } catch (error) {
-        alert(error);
-        // console.clear();
+        alert("Erro ao obter dados: ", error);
       }
     },
     async getViewData() {
@@ -921,7 +918,7 @@ export default {
     await this.fetchEnvVariables();
     await this.initializeMethods();
 
-    this.iS();
+    // this.iS();
   },
   watch: {},
 };
