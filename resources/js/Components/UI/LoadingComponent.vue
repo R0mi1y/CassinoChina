@@ -1,13 +1,13 @@
 <template>
   <div v-if="isLoading" class="is-loading-component w-full h-[calc(100vh-60px)] z-[999999]">
-    <!-- <div class="text-center flex-col">
+    <div class="text-center flex-col">
       <div class="absolute grid -translate-x-1/2 -translate-y-1/2 top-2/4 left-1/2">
         <div class="text-center mx-auto mb-5">
-          <img src="/assets/images/loading.png" alt="Loading image" class="mx-auto text-gray-200 dark:text-gray-600 is-loading-data" />
+          <img :src="`/storage/rox/logo.png`" alt="Loading image" class="mx-auto text-gray-200 dark:text-gray-600 is-loading-data" />
         </div>
         <slot></slot>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 

@@ -1,11 +1,20 @@
 <template>
-    <div>
-        <button 
+    <div class="flex items-center">
+        <button v-if="!icon"
             @click.prevent="toggleModalDeposit" 
             type="button" 
             :class="[showMobile === false ? 'hidden md:block' : '', isFull ? 'w-full' : '']" 
             class="ui-button mr-0 sm:ml-1 md:mr-1 roxDepositButton">
             {{ title }}
+        </button>
+        <button v-if="icon"
+            @click.prevent="toggleModalDeposit" 
+            type="button" 
+            >
+            <img
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAH7SURBVHgBtZXPa9RQEMe/85Ld/tBCQvWoRNBSvFQ8rVLoLnhQkLr+J/Yv2PoX1F70Wo8ehF4EKWLT254kXkUwelGQdpd2+yvbvOkk25ZsmnaXbfYDIXnzJt95mTd5Q0jReFIqa/ALYpTBsBhwcCncJCJf/DxVoNf257qfnKUz4WrZwvZ+TQOvcBUIK2pibMFedZud4Ym43tlflxU/QA4QwaOJsUoUREUGEV/KSzyCRUu3dmtxsMbTkqMD/tXrJWNqGoWZhzDlCr6uxVcvtKKKqdtcy5qk8fFYzLjXEY7Gp5wG6YVirppyP5eakedVjDybB127nv3i5I04SJKj798yPHnOlIQ5iWKKKZRmYU7fx0UYt26j+Gi2y7b3dgkHHz+k9MmSTSYrLZBMR78UHs9lmR2FITP0ACYGpC2bqv/9PRuHf37nFyD8+QNHXnfV6K3NTN+BUsRB0LfvQAGMu1Mge7Iv34FSRMUiRudfdtnakrJg7dM53+gLfAwPOU0JzbSVWy3kArEvRwU2kDqPot/+onMoC27tYO/dm4wJ5dF/aZFK8zqGgNJ0R938Unelny4jd2jFdut+XKaGPlyM2hzyQrSUHl2IHuMAtus1KTysMNN7XBEmLKtQ+rGbaPpJGuWSExIWleIZ7vQKC5cuVspcKlGz2mDFq1HKk/PH7MmunBiHddMAAAAASUVORK5CYII="
+                alt=""
+                class="bao-img" />
         </button>
 
         <div
@@ -27,8 +36,6 @@
                     </div>
                     <h1 class="text-base md:text-lg text-center" style="var(--ci-gray-light)">Depósito</h1>
                     <div></div>
-                    
-                
                 </div>
 
                 <DepositWidget :close-modal="toggleModalDeposit" v-if="modalDeposit" />
@@ -45,7 +52,7 @@ import { onMounted } from "vue";
 import { initFlowbite, Modal } from "flowbite";
 
 export default {
-    props: ['showMobile', 'title', 'isFull'],
+    props: ['showMobile', 'title', 'isFull', 'icon'],
     components: { DepositWidget },
     data() {
         return {
@@ -70,7 +77,7 @@ export default {
         this.modalDeposit = new Modal(document.getElementById('modalElDeposit'), {
             placement: 'center',
             backdrop: 'dynamic',
-            backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+            backdropClasses: 'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-12',
             closable: true,
             onHide: () => {
                 this.paymentType = null;
@@ -105,5 +112,10 @@ export default {
         border-right: 1px solid var(--ci-primary-opacity-color);
         transform: scale(0.8);
     }
+}
+
+.bao-img {
+  width: 24px;
+  margin-left: 8px;
 }
 </style>

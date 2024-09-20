@@ -3,9 +3,9 @@
     :class="[
       sidebar ? '-translate-x-full' : 'translate-x-0',
       'transition-transform duration-300 ease-in-out fixed z-1000 top-0 md:top-[60px] left-0 bg-green-500 w-fit overflow-y-auto aside-style',
-      widthMenor1330 ? 'w-full' : ''
+      widthMenor1330 ? 'w-full' : '',
     ]"
-    style="background-color: rgba(0, 0, 0, 0.85);"
+    style="background-color: rgba(0, 0, 0, 0.85)"
     aria-label="Sidebar"
   >
     <div class="sm-w-72 h-full md:h-full overflow-y-auto sidebar-color">
@@ -18,7 +18,7 @@
 
       <div class="pb-2 pl-5 pr-5 pt-0 sidebar-color justify-start gap-2 items-start">
         <div
-          v-for="(card, index) in cardList.slice(0, Math.ceil(cardList.length / 2))"
+          v-for="(card, index) in cardList"
           :key="index"
           class="banner__item mb-2"
           @click="handleCardClick(card)"
@@ -58,7 +58,7 @@
             @click="toggleActivity"
             data-v-f127b5d0=""
           >
-            <span data-v-f127b5d0="">Centro de promoção</span>
+            <span data-v-f127b5d0="">Centro de Eventos</span>
             <span
               class="activity__header--icon"
               :class="isActivityOpen ? '' : 'closed'"
@@ -72,30 +72,69 @@
               :class="isActivityOpen ? '' : 'hidden'"
               data-v-f127b5d0=""
             >
-              <div
-                v-for="(card, index) in cardList.slice(Math.ceil(cardList.length / 2))"
+              <a
+                v-for="(card, index) in imageList"
                 :key="index"
-                @click="handleCardClick(card)"
                 class="activity__item mb-2"
                 data-v-f127b5d0=""
+                :href="card.link"
               >
                 <img
                   class="activity__item--img image-banner"
-                  :src="card.image"
-                  :alt="card.name"
+                  :src="card.src"
+                  :alt="card.text"
                   @mousedown.prevent
                   @contextmenu.prevent
                   @dragstart.prevent
                   data-v-f127b5d0=""
                 />
                 <span class="activity__item--label" data-v-f127b5d0="">{{
-                  card.name
+                  card.text
                 }}</span>
-              </div>
+              </a>
             </div>
           </div>
         </div>
 
+        <div
+          class="my-3 px-3 py-2 rounded-lg"
+          style="background-color: var(--side-menu-color); color: white"
+        >
+          <div class="flex justify-around items-center px-3 relative">
+            <i
+              class="fa-solid fa-backward-step text-sm"
+              @click="prevMusic"
+              style="cursor: pointer"
+            >
+            </i>
+            <i
+              class="fa-solid"
+              :class="playIconClass"
+              @click="toggleAudio"
+              style="cursor: pointer"
+            >
+            </i>
+            <i
+              class="fa-solid fa-forward-step text-sm"
+              @click="nextMusic"
+              style="cursor: pointer"
+            >
+            </i>
+            <i class="fa-solid fa-repeat text-sm" style="cursor: pointer"> </i>
+            <div class="relative" @click="toogleMusics">
+              <i class="fa-sharp fa-solid fa-list-music text-sm" style="cursor: pointer">
+              </i>
+              <span
+                class="absolute top-[-10px] left-[-8px] bg-red-500 text-white text-xs rounded-full px-1"
+                >1</span
+              >
+            </div>
+          </div>
+
+          <p class="mt-1 text-center text-xs md:text-sm">{{ musicName }}</p>
+          <audio ref="audioPlayer" :src="audioSource"></audio>
+        </div>
+        
         <div class="telegram mt-3" data-v-f127b5d0="">
           <span class="telegram--icon" data-v-f127b5d0=""></span
           ><span class="telegram--text" data-v-f127b5d0="">Telegram</span>
@@ -108,45 +147,7 @@
         </div>
       </div>
 
-      <div
-        class="ml-2 mr-4 px-3 py-2 rounded-lg"
-        style="background-color: var(--side-menu-color); color: white"
-      >
-        <div class="flex justify-around items-center px-3 relative">
-          <i
-            class="fa-solid fa-backward-step text-sm"
-            @click="prevMusic"
-            style="cursor: pointer"
-          >
-          </i>
-          <i
-            class="fa-solid"
-            :class="playIconClass"
-            @click="toggleAudio"
-            style="cursor: pointer"
-          >
-          </i>
-          <i
-            class="fa-solid fa-forward-step text-sm"
-            @click="nextMusic"
-            style="cursor: pointer"
-          >
-          </i>
-          <i class="fa-solid fa-repeat text-sm" style="cursor: pointer"> </i>
-          <div class="relative" @click="toogleMusics">
-            <i class="fa-sharp fa-solid fa-list-music text-sm" style="cursor: pointer">
-            </i>
-            <span
-              class="absolute top-[-10px] left-[-8px] bg-red-500 text-white text-xs rounded-full px-1"
-              >1</span
-            >
-          </div>
-        </div>
-
-        <p class="mt-1 text-center text-xs md:text-sm">{{ musicName }}</p>
-        <audio ref="audioPlayer" :src="audioSource"></audio>
-      </div>
-      <div class="p-2 sidebar-color flex flex-wrap justify-start gap-2 items-start">
+      <!-- <div class="p-2 sidebar-color flex flex-wrap justify-start gap-2 items-start">
         <div
           v-for="(image, index) in imageList"
           :key="index"
@@ -167,11 +168,11 @@
           />
           <p class="text-xs">{{ image.text }}</p>
         </div>
-      </div>
+      </div> -->
       <div
         class="p-2 pl-4 sidebar-color flex flex-col flex-wrap justify-start items-start text-md gap-4"
       >
-        <a
+        <!-- <a
           class="flex gap-2 justify-between items-center w-[95%] cursor-pointer relative"
           @click="tooglePing"
         >
@@ -222,13 +223,13 @@
           >
             Português
           </p>
-        </a>
-        <div v-if="showButton">
+        </a> -->
+        <!-- <div v-if="showButton">
           <button class="flex gap-4 items-center" @click="installPWA">
             <i class="text-xl fa-solid fa-download"> </i>
             <p class="text-xs md:text-base">Baixar App</p>
           </button>
-        </div>
+        </div> -->
 
         <a class="flex gap-4 items-center" href="/home/support">
           <i class="text-xl fa-solid fa-headset"> </i>
@@ -451,25 +452,25 @@ export default {
       latencia: null,
       screenWidth: window.innerWidth,
       cardList: [
-        { name: "Popular", image: "/storage/rox/popular_on.png", id: "#popular" },
+        { name: "Todos", image: "/storage/rox/popular_on.png", id: "#all" },
         { name: "Slots", image: "/storage/rox/slots_off.png", id: "#slots" },
-        { name: "Pescaria", image: "/storage/rox/fish_off.png", id: "#pescaria" },
+        { name: "PG Games", image: "/storage/rox/icons/pg-logo.png", id: "#pg" },
         {
-          name: "Blockchain",
-          image: "/storage/rox/blockchain_off.png",
-          id: "#blockchain",
+          name: "Pragmatic Play",
+          image: "/storage/rox/icons/pragmatic-logo.png",
+          id: "#pragmatic",
         },
-        { name: "Recentes", image: "/storage/rox/recente_off.png", id: "#top" },
-        { name: "Favoritos", image: "/storage/rox/favorito_off.png", id: "#top" },
+        // { name: "Recentes", image: "/storage/rox/recente_off.png", id: "#top" },
+        // { name: "Favoritos", image: "/storage/rox/favorito_off.png", id: "#top" },
       ],
       imageList: [
-        { src: "/storage/rox/rox_btn_1rox.png", text: "Eventos", link: "/home/events" },
+        { src: "/storage/rox/icons/eventos-icon.png", text: "Eventos", link: "/home/events" },
         {
-          src: "/storage/rox/rox_btn_2rox.png",
+          src: "/storage/rox/icons/pendentes-icon.png",
           text: "Pendente",
           link: "/home/pendents",
         },
-        { src: "/storage/rox/rox_btn_3rox.png", text: "Agente", link: "/home/agents" },
+        { src: "/storage/rox/icons/agentes-icon.png", text: "Agente", link: "/home/agents" },
       ],
     };
   },
@@ -495,7 +496,7 @@ export default {
     const rangeValue = ref(30);
     const ping = ref(null);
     const latencia = ref(null);
-    
+
     onMounted(() => {
       window.addEventListener("beforeinstallprompt", (e) => {
         e.preventDefault();
@@ -505,11 +506,11 @@ export default {
 
       window.addEventListener("appinstalled", () => {
         showButton.value = false;
-        console.log('PWA foi instalado');
+        console.log("PWA foi instalado");
       });
     });
   },
-  beforeDestroy () {
+  beforeDestroy() {
     window.removeEventListener("resize", this.updateScreenWidth);
   },
   computed: {
@@ -543,8 +544,6 @@ export default {
     shouldShowMusics() {
       return this.musicSelector && (this.screenWidth > 480 || this.sidebar);
     },
-    
-    
   },
   methods: {
     async installPWA() {
@@ -563,7 +562,7 @@ export default {
     updateScreenWidth() {
       const isWidthLessThan1330 = window.innerWidth < 1330;
       this.screenWidth = window.innerWidth;
-      
+
       if (isWidthLessThan1330 !== this.widthMenor1330) {
         this.widthMenor1330 = isWidthLessThan1330;
         this.sidebarMenuStore.setSidebarStatus(isWidthLessThan1330);
@@ -741,7 +740,7 @@ export default {
       this.musicName = newName;
       if (audio) {
         audio.load();
-        
+
         if (this.isPlaying) {
           audio.play();
         }
@@ -772,7 +771,7 @@ export default {
       this.musicName = newName;
       if (audio) {
         audio.load();
-        
+
         if (this.isPlaying) {
           audio.play();
         }
@@ -801,7 +800,7 @@ export default {
     }
 
     window.addEventListener("resize", this.updateScreenWidth);
-    
+
     this.updateCardImages();
     this.updateScreenWidth();
     this.fetchEnvVariables();
@@ -1001,7 +1000,7 @@ input[type="range"].styled-range {
 
 .card-text {
   flex: 1;
-  margin-right: 10px;
+  margin-left: 10px;
   font-style: italic;
   font-weight: 800;
   font-size: 16px;
@@ -1186,7 +1185,7 @@ input[type="range"].styled-range {
 }
 
 .aside-style {
-  z-index: 9999;
+  z-index: 111;
   top: 0px;
   height: 100vh;
 }

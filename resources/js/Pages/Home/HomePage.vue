@@ -2,11 +2,12 @@
   <BaseLayout :footer="false">
     <LoadingComponent :isLoading="isLoading">
       <div class="text-center">
-        <span>{{ $t("Loading data from the platform") }}</span>
+        <span>Carregando dados da plataforma</span>
+        <!-- <span>{{ $t("Loading data from the platform") }}</span> -->
       </div>
     </LoadingComponent>
 
-    <div
+    <!-- <div
       v-if="alertTop"
       class="w-full justify-between items-center inline-flex mb-6"
       style="background: rgb(92, 39, 245)"
@@ -18,7 +19,7 @@
         <span class="btn alert-btn-1 my-1 mr-5">clique</span>
         <span class="i-cross btn" @click="alertTop = false">╳</span>
       </span>
-    </div>
+    </div> -->
 
     <div v-if="wlC" style="overflow: visible">
       <div class="relative flex items-center mt-3 mb-2 pt-2 pb-2">
