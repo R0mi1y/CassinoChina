@@ -124,7 +124,14 @@ export default {
 }
 
 .card-deposit {
-  min-width: 500px;
+  max-width: 500px;
+}
+
+@media (max-width: 600px) {
+    .card-deposit {
+        min-width: 200px;
+        max-width: 1000px;
+    }
 }
 
 .center-top-text-dep.activate {

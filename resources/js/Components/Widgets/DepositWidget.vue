@@ -355,7 +355,7 @@
             <!-- <span class="text-[var(--ci-secundary-color)] text-left mt-4 text-xs"
               >Depósito</span
             > -->
-            <div class="w-full mb-2 grid gap-2 grid-cols-4 md:grid-cols-4 mt-4">
+            <div class="w-full mb-2 grid gap-2 mt-4 grid-amount-choices">
               <div v-for="amount in depositAmounts" :key="amount">
                 <div
                   @click.prevent="setAmount(amount)"
@@ -821,5 +821,21 @@ export default {
 }
 .btn-buy:hover {
   background-color: rgb(128, 255, 247);
+}
+
+.grid-amount-choices {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 600px) {
+  .grid-amount-choices {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+}
+@media (max-width: 350px) {
+  .grid-amount-choices {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
 }
 </style>

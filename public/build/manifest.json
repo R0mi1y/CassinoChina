@@ -56,7 +56,7 @@
     "src": "resources/css/app.css"
   },
   "resources/js/app.css": {
-    "file": "assets/app-fd0e76db.css",
+    "file": "assets/app-87902bd8.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
@@ -67,7 +67,7 @@
       "assets/sport-small-5e566ee2.png"
     ],
     "css": [
-      "assets/app-fd0e76db.css"
+      "assets/app-87902bd8.css"
     ],
     "dynamicImports": [
       "lang/en.json",
@@ -78,7 +78,7 @@
       "lang/php_vendor.json",
       "lang/pt_BR.json"
     ],
-    "file": "assets/app-2a4618db.js",
+    "file": "assets/app-174d3ba9.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }
