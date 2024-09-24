@@ -408,7 +408,7 @@
 </template>
 
 <script>
-import { onMounted, onBeforeUnmount, ref, watch, beforeDestroy } from "vue";
+import { onMounted, onBeforeUnmount, ref, watch } from "vue";
 import { sidebarStore } from "@/Stores/SideBarStore.js";
 import { RouterLink } from "vue-router";
 import axios from "axios";

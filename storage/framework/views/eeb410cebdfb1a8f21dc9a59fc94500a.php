@@ -147,7 +147,6 @@
                 background-size: auto;
                 background-color: <?php echo e($custom['background_base_dark']); ?> !important;
             }
-            
         </style>
 
         <?php if(!empty($custom['custom_css'])): ?>

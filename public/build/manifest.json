@@ -50,6 +50,11 @@
     "isDynamicEntry": true,
     "src": "lang/pt_BR.json"
   },
+  "node_modules/workbox-window/build/workbox-window.prod.es5.mjs": {
+    "file": "assets/workbox-window.prod.es5-c46a1faa.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/workbox-window/build/workbox-window.prod.es5.mjs"
+  },
   "resources/css/app.css": {
     "file": "assets/app-4ed993c7.js",
     "isEntry": true,
@@ -70,6 +75,7 @@
       "assets/app-87902bd8.css"
     ],
     "dynamicImports": [
+      "node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
       "lang/en.json",
       "lang/es.json",
       "lang/php_en.json",
@@ -78,7 +84,7 @@
       "lang/php_vendor.json",
       "lang/pt_BR.json"
     ],
-    "file": "assets/app-174d3ba9.js",
+    "file": "assets/app-403de4f3.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }
