@@ -65,7 +65,7 @@
             :root {
                 --ci-primary-color: <?php echo e($custom['primary_color']); ?>;
                 /* --navtop-color: #201d2e;
-                --sidebar-color: #000000; */
+                --sidebar-color: #0d0b12; */
                 
                 /* --ci-primary-color: #201d2e; */
                 --ci-primary-opacity-color: <?php echo e($custom['primary_opacity_color']); ?>;
@@ -271,9 +271,11 @@
 
             
             function removeLoadingScreen() {
-                if (loadingScreen) loadingScreen.style.display = 'none';
-                const content = document.getElementById('content');
-                if (content) content.style.display = 'block';
+                if (loadingScreen) {
+                    loadingScreen.style.display = 'none';
+                    var content = document.getElementById('content');
+                    if (content) content.style.display = 'block';
+                }
             }
 
             setTimeout(function() {
@@ -296,4 +298,4 @@
         
     </body>
 </html>
-<?php /**PATH C:\Users\auifg\Downloads\China\resources\views/layouts/app.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\nevesfg\Desktop\FRONTEND\Outros Projetos\CassinoChina\resources\views/layouts/app.blade.php ENDPATH**/ ?>

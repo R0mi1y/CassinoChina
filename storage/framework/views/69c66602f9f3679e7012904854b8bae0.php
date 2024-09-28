@@ -37,10 +37,10 @@
             scope: '.'
         }).then(function (registration) {
             // Registration was successful
-            // console.log('Laravel PWA: ServiceWorker registration successful with scope: ', registration.scope);
+            console.log('Laravel PWA: ServiceWorker registration successful with scope: ', registration.scope);
         }, function (err) {
             // registration failed :(
-            // console.log('Laravel PWA: ServiceWorker registration failed: ', err);
+            console.log('Laravel PWA: ServiceWorker registration failed: ', err);
         });
     }
-</script><?php /**PATH C:\Users\auifg\Desktop\CassinoChina\resources\views/vendor/laravelpwa/meta.blade.php ENDPATH**/ ?>
+</script><?php /**PATH C:\Users\nevesfg\Desktop\FRONTEND\Outros Projetos\CassinoChina\vendor\silviolleite\laravelpwa\Providers/../resources/views/meta.blade.php ENDPATH**/ ?>

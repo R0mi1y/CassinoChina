@@ -40,11 +40,6 @@
     "isDynamicEntry": true,
     "src": "lang/php_pt_BR.json"
   },
-  "lang/php_vendor.json": {
-    "file": "assets/php_vendor-92955918.js",
-    "isDynamicEntry": true,
-    "src": "lang/php_vendor.json"
-  },
   "lang/pt_BR.json": {
     "file": "assets/pt_BR-54b39037.js",
     "isDynamicEntry": true,
@@ -56,7 +51,7 @@
     "src": "resources/css/app.css"
   },
   "resources/js/app.css": {
-    "file": "assets/app-a973fba9.css",
+    "file": "assets/app-5989fb8a.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
@@ -67,7 +62,7 @@
       "assets/sport-small-5e566ee2.png"
     ],
     "css": [
-      "assets/app-a973fba9.css"
+      "assets/app-5989fb8a.css"
     ],
     "dynamicImports": [
       "lang/en.json",
@@ -75,10 +70,9 @@
       "lang/php_en.json",
       "lang/php_es.json",
       "lang/php_pt_BR.json",
-      "lang/php_vendor.json",
       "lang/pt_BR.json"
     ],
-    "file": "assets/app-58da272c.js",
+    "file": "assets/app-59d370c6.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }
