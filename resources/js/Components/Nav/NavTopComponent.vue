@@ -10,8 +10,11 @@
     <div class="px-3 lg:px-5 lg:pl-3 nav-menu flex w-full items-center">
       <div class="flex items-center justify-between w-full">
         <div class="ml-4 flex items-center justify-between" style="">
-          <button class="mr-5 ml-5 fa-solid items-center text-sm arrow_side_bar" @click="toggleMenu">
-            <img :src="`/storage/rox/arrow_side_bar.png`" alt="Close Menu">
+          <button
+            class="mr-5 ml-5 fa-solid items-center text-sm arrow_side_bar"
+            @click="toggleMenu"
+          >
+            <img :src="`/storage/rox/arrow_side_bar.png`" alt="Close Menu" />
           </button>
           <img
             v-show="!widthLessThan450"
@@ -19,15 +22,11 @@
             alt="News"
             class="logo ml-5"
           />
-          
         </div>
-        
+
         <div v-if="!simple" class="flex items-center justify-end">
           <div v-if="!isAuthenticated" class="flex items-center ml-5 md:mr-10">
-            <button
-              @click.prevent="loginToggle"
-              class="sign-in-up btn"
-            >
+            <button @click.prevent="loginToggle" class="sign-in-up btn">
               Autenticar-se
             </button>
             <button
@@ -38,74 +37,233 @@
             </button>
           </div>
 
-          <div
-            v-if="isAuthenticated"
-            class="flex items-center justify-left gap-0"
-            style=""
-          >
-            <WalletBalance style="position: relative" />
-            <MakeDeposit
-              :showMobile="true"
-              :title="'Depósito'"
-              style="position: relative; padding-right: 1px; right: 8px"
-            />
-
-            <div
-              class="block transform scale-[0.8] md:scale-[1] md:hidden relative right-5"
+          <div v-if="isAuthenticated" class="min-info">
+            <span class="money-data userinfo-item">
+              <WalletBalance :icon="true" />
+              <MakeDeposit :icon="true" />
+            </span>
+            <span class="user-line"> </span>
+            <button
+              type="button"
               aria-expanded="false"
               data-dropdown-toggle="dropdown-user2"
-              style="
-                background-color: var(--ci-primary-opacity-color);
-                border-radius: 0 8px 8px 0;
-                border: none;
-                padding: 0.4rem;
-              "
             >
-              <i
-                class="fa-solid fa-chevron-down"
-                style="
-                  padding-left: 8px;
-                  border-left: 1px solid var(--ci-secundary-color);
-                "
-              ></i>
-            </div>
+              <span
+                class="user-name userinfo-item el-tooltip__trigger el-tooltip__trigger"
+              >
+                <img
+                  @mousedown.prevent
+                  @contextmenu.prevent
+                  @dragstart.prevent
+                  :src="`/storage/rox/profile_pic_rox.png`"
+                  class="user-avatar"
+                  alt=""
+                />
+                <span class="level">{{ truncatedName }}</span>
+                <svg viewBox="0 0 1024 1024" width="1.2em" height="1.2em">
+                  <path
+                    fill="currentColor"
+                    d="M831.872 340.864L512 652.672L192.128 340.864a30.592 30.592 0 0 0-42.752 0a29.12 29.12 0 0 0 0 41.6L489.664 714.24a32 32 0 0 0 44.672 0l340.288-331.712a29.12 29.12 0 0 0 0-41.728a30.592 30.592 0 0 0-42.752 0z"
+                  ></path>
+                </svg>
+              </span>
+            </button>
+            <span
+              @click="$router.push('/games/search')"
+              class="msg-icon el-tooltip__trigger el-tooltip__trigger ml-3"
+            >
+              <i class="fa-solid fa-magnifying-glass"> </i>
+            </span>
 
             <div
-              class="z-50 hidden my-6 mr-12 text-base list-none rounded-lg absolute left-12"
               id="dropdown-user2"
+              class="dropdown-user-div-2 hidden"
               style="
-                background: var(--ci-primary-color);
-                border: 1px solid var(--ci-secundary-color);
-                color: var(--ci-gray-light);
+                z-index: 2015;
+                width: 375px;
                 position: absolute;
-                top: 80px !important;
-                left: 50px !important;
-                width: 120px;
-                /* max-width: 100px; */
+                inset: 56px auto auto 1148px;
               "
             >
-              <div class="" role="none">
-                <div
-                  class="w-full flex flex-col items-center justify-between gap-1 rounded-lg"
-                >
+              <div class="content" style="--3e1a5ab8: #03ffee">
+                <header>
+                  <div class="card">
+                    <div class="flex">
+                      <div class="avatar">
+                        <span class="el-avatar el-avatar--circle">
+                          <img
+                            :src="`/storage/rox/profile_pic_rox.png`"
+                            style="object-fit: cover"
+                          />
+                        </span>
+                      </div>
+                      <div>
+                        <h2 class="flex items-center justify-between">{{ truncatedName }} <i class="icon-copy" @click="copyToClipboard(truncatedName)"></i></h2>
+                        <div class="phone">
+                          <div>
+                            <span class="img"> </span>
+                            <span>Vinculado</span>
+                          </div>
+                          <div>
+                            <span>{{ userData?.phone }}</span>
+                          </div>
+                        </div>
+                        <div class="icons flex items-center justify-left">
+                          <div class="flex items-center mr-4">
+                            <img
+                              class="vip"
+                              :src="`/storage/rox/vip_light_icon0.png`"
+                            />
+                            <span class="level">ID: {{ userData?.id }}</span>
+                          </div>
+                          <i class="icon-copy" @click="copyToClipboard(userData?.id)"></i>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="info_wrap"></div>
+                </header>
+                <div class="list-wrap">
+                  <div class="el-collapse list">
+                    <RouterLink
+                      :to="{ name: 'profileWithdraw' }">
+                      <div class="el-collapse-item list-item">
+                        <div>
+                          <div class="el-collapse-item__header">
+                            <div class="title-profile-option">Saque</div>
+                            <i class="el-icon el-collapse-item__arrow">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 1024 1024"
+                              >
+                                <path
+                                  fill="currentColor"
+                                  d="M340.864 149.312a30.592 30.592 0 0 0 0 42.752L652.736 512 340.864 831.872a30.592 30.592 0 0 0 0 42.752 29.12 29.12 0 0 0 41.728 0L714.24 534.336a32 32 0 0 0 0-44.672L382.592 149.376a29.12 29.12 0 0 0-41.728 0z"
+                                ></path>
+                              </svg>
+                            </i>
+                          </div>
+                        </div>
+                        <div
+                          class="el-collapse-item__wrap"
+                          style="display: none"
+                        >
+                          <div class="el-collapse-item__content">
+                            <div class="content" style="display: none">
+                              <i> </i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </RouterLink>
+                    
+                    <RouterLink
+                      :to="{ name: 'profileAffiliate' }"
+                    >
+                      <div class="el-collapse-item list-item">
+                        <div>
+                          <div
+                            class="el-collapse-item__header"
+                            role="button"
+                            tabindex="0"
+                          >
+                            <div class="title-profile-option">Relatório</div>
+                            <i class="el-icon el-collapse-item__arrow">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 1024 1024"
+                              >
+                                <path
+                                  fill="currentColor"
+                                  d="M340.864 149.312a30.592 30.592 0 0 0 0 42.752L652.736 512 340.864 831.872a30.592 30.592 0 0 0 0 42.752 29.12 29.12 0 0 0 41.728 0L714.24 534.336a32 32 0 0 0 0-44.672L382.592 149.376a29.12 29.12 0 0 0-41.728 0z"
+                                ></path>
+                              </svg>
+                            </i>
+                          </div>
+                        </div>
+                        <div
+                          id="el-collapse-content-496"
+                          class="el-collapse-item__wrap"
+                          role="tabpanel"
+                          aria-hidden="true"
+                          aria-labelledby="el-collapse-head-496"
+                          style="display: none"
+                        >
+                          <div class="el-collapse-item__content">
+                            <div class="content" style="display: none">
+                              <i> </i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </RouterLink>
+                    
+                    <RouterLink
+                      :to="{ name: 'profile' }">
+                      <div class="el-collapse-item list-item">
+                        <div>
+                          <div
+                            class="el-collapse-item__header"
+                          >
+                            <div class="title-profile-option">Histórico de retiradas</div>
+                            <i class="el-icon el-collapse-item__arrow">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 1024 1024"
+                              >
+                                <path
+                                  fill="currentColor"
+                                  d="M340.864 149.312a30.592 30.592 0 0 0 0 42.752L652.736 512 340.864 831.872a30.592 30.592 0 0 0 0 42.752 29.12 29.12 0 0 0 41.728 0L714.24 534.336a32 32 0 0 0 0-44.672L382.592 149.376a29.12 29.12 0 0 0-41.728 0z"
+                                ></path>
+                              </svg>
+                            </i>
+                          </div>
+                        </div>
+                      </div>
+                    </RouterLink>
+                  </div>
+                  <div class="el-overlay" style="z-index: 2014; display: none">
+                    <div
+                      role="dialog"
+                      aria-modal="true"
+                      aria-labelledby="el-id-3966-21"
+                      aria-describedby="el-id-3966-22"
+                      class="el-overlay-dialog"
+                      style="display: flex"
+                    ></div>
+                  </div>
+                </div>
+                <footer>
+                  <div @click.prevent="logoutAccount">Sair</div>
+                </footer>
+              </div>
+              <span class="el-popper__arrow" style="position: absolute; left: 253.6px">
+              </span>
+            </div>
+
+
+
+            <div
+              class="z-50 hidden my-6 text-base list-none dropdown-user-div"
+              id="dropdown-user222"
+            >
+              <div class="px-8 py-6" role="none">
+                <div class="w-full flex items-center justify-between py-6">
                   <RouterLink
                     :to="{ name: 'profileWithdraw' }"
                     active-class="profile-menu-active"
                     class="block text-sm w-full"
                   >
                     <div
-                      class="rounded-[8px] py-2"
+                      class="rounded-[15px] py-5"
                       style="
-                        background-color: var(--ci-primary-color);
+                        width: 33%;
+                        min-width: 95px;
+                        background-color: var(--ci-secundary-color);
                         text-align: center;
                       "
                     >
-                      <p
-                        class="w-full font-semibold"
-                        style="color: var(--ci-primary-opacity-color)"
-                      >
-                        Saque
-                      </p>
+                      <p class="w-full">Saque</p>
                     </div>
                   </RouterLink>
 
@@ -115,263 +273,75 @@
                     class="block text-sm w-full"
                   >
                     <div
-                      class="rounded-[8px] py-2"
+                      class="rounded-[15px] py-5"
                       style="
-                        background-color: var(--ci-primary-color);
+                        width: 33%;
+                        min-width: 95px;
+                        background-color: var(--ci-secundary-color);
                         text-align: center;
                       "
                     >
-                      <p
-                        class="w-full font-semibold"
-                        style="color: var(--ci-primary-opacity-color)"
-                      >
-                        Relatório
-                      </p>
+                      <p class="w-full">Relatório</p>
                     </div>
                   </RouterLink>
 
-                  <!-- <a
-                                            @click.prevent="logoutAccount"
-                                            href="#"
-                                            class="text-md"
-                                            role="menuitem"
-                                        >
-                                            <span class="w-full text-center h-8 ">
-                                                <i
-                                                    class="fa-duotone fa-right-from-bracket"
-                                                ></i>
-                                            </span>
-                                            Sair
-                                        </a> -->
-                </div>
-              </div>
-            </div>
-
-            <div class="hidden items-center ml-3 md:flex">
-              <div class="flex gap-2">
-                <button
-                  type="button"
-                  class="flex text-sm"
-                  aria-expanded="false"
-                  data-dropdown-toggle="dropdown-user"
-                >
-                  <!-- <span class="sr-only">Open user menu</span> -->
-                  <img
-                    @mousedown.prevent
-                    @contextmenu.prevent
-                    @dragstart.prevent
-                    class="w-14 h-12 rounded-[8px]"
-                    :src="`/storage/rox/profile_pic_rox.png`"
-                    alt=""
-                  />
-                </button>
-                <div class="w-28">
-                  <p
-                    class="text-md font-semibold"
-                    role="none"
-                    style="color: var(--ci-primary-opacity-color)"
+                  <RouterLink
+                    :to="{ name: 'profile' }"
+                    active-class="profile-menu-active"
+                    class="block text-sm w-full"
                   >
-                    {{ truncatedName }}
-                  </p>
-                  <p class="flex text-sm gap-2 cursor-pointer" role="none">
-                    ID: {{ userData?.id }}
-                    <span
-                      class="material-symbols-outlined"
-                      style="color: var(--ci-primary-opacity-color)"
-                      >content_copy</span
+                    <div
+                      class="rounded-[15px] py-5"
+                      style="
+                        width: 33%;
+                        min-width: 95px;
+                        background-color: var(--ci-secundary-color);
+                        text-align: center;
+                      "
                     >
-                  </p>
+                      <p class="w-full">Perfil</p>
+                    </div>
+                  </RouterLink>
                 </div>
               </div>
-              <div
-                class="z-50 hidden my-6 text-base list-none"
-                id="dropdown-user"
+              <ul
+                class="py-1 w-full"
+                role="none"
                 style="
-                  background: var(--ci-primary-color);
-                  border-left: 2px solid var(--ci-gray-light);
-                  color: var(--ci-gray-light);
-                  position: relative;
-                  top: 50px !important;
                   width: 100%;
-                  max-width: 500px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: right;
                 "
               >
-                <div class="px-8 py-6" role="none">
-                  <div class="w-full flex items-center justify-between py-6">
-                    <RouterLink
-                      :to="{ name: 'profileWithdraw' }"
-                      active-class="profile-menu-active"
-                      class="block text-sm w-full"
-                    >
-                      <div
-                        class="rounded-[15px] py-5"
-                        style="
-                          width: 33%;
-                          min-width: 95px;
-                          background-color: var(--ci-secundary-color);
-                          text-align: center;
-                        "
-                      >
-                        <p class="w-full">Saque</p>
-                      </div>
-                    </RouterLink>
-
-                    <RouterLink
-                      :to="{ name: 'profileAffiliate' }"
-                      active-class="profile-menu-active"
-                      class="block text-sm w-full"
-                    >
-                      <div
-                        class="rounded-[15px] py-5"
-                        style="
-                          width: 33%;
-                          min-width: 95px;
-                          background-color: var(--ci-secundary-color);
-                          text-align: center;
-                        "
-                      >
-                        <p class="w-full">Relatório</p>
-                      </div>
-                    </RouterLink>
-
-                    <RouterLink
-                      :to="{ name: 'profile' }"
-                      active-class="profile-menu-active"
-                      class="block text-sm w-full"
-                    >
-                      <div
-                        class="rounded-[15px] py-5"
-                        style="
-                          width: 33%;
-                          min-width: 95px;
-                          background-color: var(--ci-secundary-color);
-                          text-align: center;
-                        "
-                      >
-                        <p class="w-full">Perfil</p>
-                      </div>
-                    </RouterLink>
-                  </div>
-
-                  <!-- <p class="text-sm" role="none">
-                                        ID: {{ userData?.id }}
-                                    </p>
-                                    <p class="text-sm font-medium" role="none">
-                                        {{ userData?.email }}
-                                    </p>
-                                    <p class="text-sm font-medium" role="none">
-                                        {{ userData?.phone }}
-                                    </p> -->
-                </div>
-                <ul
-                  class="py-1 w-full"
-                  role="none"
+                <li
+                  class="w-full"
                   style="
                     width: 100%;
                     display: flex;
-                    align-items: center;
+                    align-items: flex-end;
                     justify-content: right;
+                    padding: 2rem;
+                    text-align: right;
                   "
                 >
-                  <!-- <li>
-                                        <RouterLink :to="{ name: 'home' }" active-class="link-active" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">
-                                            <span class="w-8 h-8 mr-3">
-                                                <i class="fa-duotone fa-house"></i>
-                                            </span>
-                                            {{ $t('Dashboard') }}
-                                        </RouterLink>
-                                    </li> -->
-                  <!-- <li>
-                                        <RouterLink
-                                            :to="{ name: 'profileAffiliate' }"
-                                            active-class="profile-menu-active"
-                                            class="block px-4 py-2 text-sm"
-                                        >
-                                            <span class="w-8 h-8 mr-3">
-                                                <i
-                                                    class="fa-duotone fa-people-group"
-                                                ></i>
-                                            </span>
-                                            Indicações
-                                        </RouterLink>
-                                    </li> -->
-                  <!-- <li>
-                                        <RouterLink
-                                            :to="{ name: 'profileDeposit' }"
-                                            active-class="profile-menu-active"
-                                            class="block px-4 py-2 text-sm"
-                                        >
-                                            <span class="w-8 h-8 mr-3">
-                                                <i
-                                                    class="fa-regular fa-money-bill-trend-up"
-                                                ></i>
-                                            </span>
-                                            Depositar
-                                        </RouterLink>
-                                    </li> -->
-                  <!-- <li>
-                                        <RouterLink
-                                            :to="{ name: 'profileWithdraw' }"
-                                            active-class="profile-menu-active"
-                                            class="block px-4 py-2 text-sm"
-                                        >
-                                            <span class="w-8 h-8 mr-3">
-                                                <i
-                                                    class="fa-light fa-money-bill-transfer"
-                                                ></i>
-                                            </span>
-                                            {{ $t("Withdraw") }}
-                                        </RouterLink>
-                                    </li> -->
-                  <!-- <li>
-                                        <RouterLink :to="{ name: 'profileWallet' }" active-class="profile-menu-active" class="block px-4 py-2 text-sm ">
-                                            <span class="w-8 h-8 mr-3">
-                                              <i class="fa-duotone fa-wallet"></i>
-                                            </span>
-                                            {{ $t('My Wallet') }}
-                                        </RouterLink>
-                                    </li> -->
-                  <!-- <li>
-                                        <a href="#" @click.prevent="profileToggle" class="block px-4 py-2 text-sm " role="menuitem">
-                                            <span class="w-8 h-8 mr-3">
-                                               <i class="fa-regular fa-id-card-clip"></i>
-                                            </span>
-                                            {{ $t('My Profile') }}
-                                        </a>
-                                    </li> -->
-                  <li
-                    class="w-full"
-                    style="
-                      width: 100%;
-                      display: flex;
-                      align-items: flex-end;
-                      justify-content: right;
-                      padding: 2rem;
-                      text-align: right;
-                    "
+                  <a
+                    @click.prevent="logoutAccount"
+                    href="#"
+                    class="text-md self-end"
+                    role="menuitem"
                   >
-                    <a
-                      @click.prevent="logoutAccount"
-                      href="#"
-                      class="text-md self-end"
-                      role="menuitem"
-                    >
-                      <span class="w-8 h-8 mr-3">
-                        <i class="fa-duotone fa-right-from-bracket"></i>
-                      </span>
-                      Sair
-                    </a>
-                  </li>
-                </ul>
-              </div>
+                    <span class="w-8 h-8 mr-3">
+                      <i class="fa-duotone fa-right-from-bracket"> </i>
+                    </span>
+                    Sair
+                  </a>
+                </li>
+              </ul>
             </div>
-
-            <p
-              @click="$router.push('/games/search')"
-              class="block cursor-pointer ml-1 relative right-5"
-            >
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </p>
+            
+            
+            
           </div>
         </div>
       </div>
@@ -469,7 +439,6 @@
             </div>
           </div>
         </div>
-        <!-- End searchbar action -->
       </div>
     </transition>
   </nav>
@@ -480,7 +449,122 @@
     aria-hidden="true"
     class="fixed top-0 left-0 right-0 z-50 hidden overflow-x-hidden overflow-y-auto md:inset-0 h-screen md:h-[calc(100%-1rem)] max-h-full ml-2 mr-2"
   >
-    <div
+    <div v-if="true" class="el-dialog-div bg-[var(--background-base)]" tabindex="-1">
+      <p
+        class="roxLoginButtonMobile block"
+        @click.prevent="loginToggle"
+        style="color: white; font-weight: 400; font-size: 1.6rem"
+      >
+        <i class="fa-thin fa-circle-xmark"> </i>
+      </p>
+      <header class="el-dialog__header">
+        <span class="el-dialog__title"> </span>
+      </header>
+      <div class="el-dialog__body">
+        <i class="close-icon"> </i>
+        <img class="bg" src="https://pixrico.com/public/png/bg-dfc0da3a.png" alt="" />
+        <div class="tab-content">
+          <div class="tab active">Autenticar-se</div>
+          <div @click.prevent="hideLoginShowRegisterToggle" class="tab">Criar conta</div>
+        </div>
+        <div class="content-wrap">
+          <div>
+            <form class="el-form" @submit.prevent="loginSubmit">
+              <div class="el-form-item is-success is-required asterisk-left">
+                <div class="el-form-item__content">
+                  <div class="el-input el-input--suffix">
+                    <div class="el-input__wrapper">
+                      <input
+                        required
+                        type="text"
+                        v-model="loginForm.phone"
+                        autocomplete="phone"
+                        name="phone"
+                        v-maska
+                        data-maska="[
+                          '(##) ####-####',
+                          '(##) #####-####'
+                        ]"
+                        class="el-input__inner"
+                        placeholder="Por favor, insira Número do Celular"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="el-form-item is-success is-required asterisk-left">
+                <div class="el-form-item__content">
+                  <div class="el-input el-input--suffix">
+                    <div class="el-input__wrapper">
+                      <input
+                        class="el-input__inner"
+                        required
+                        :type="typeInputPassword"
+                        v-model="loginForm.password"
+                        name="password"
+                        autocomplete="current-password"
+                        placeholder="Digite sua senha de acesso"
+                      />
+                      <button
+                        type="button"
+                        @click.prevent="togglePassword"
+                        class="absolute inset-y-0 right-0 flex items-center pr-3.5"
+                      >
+                        <i
+                          v-if="typeInputPassword === 'password'"
+                          class="fa-regular fa-eye text-[var(--ci-primary-opacity-color)]"
+                        >
+                        </i>
+                        <i
+                          v-if="typeInputPassword === 'text'"
+                          class="fa-sharp fa-regular fa-eye-slash text-[var(--ci-primary-opacity-color)]"
+                        >
+                        </i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <a href="#topo" class="forget">
+                <span>Esqueceu a senha ?</span>
+              </a>
+              <button
+                class="el-button el-button--primary el-button--large submit-button my-btn submit-button"
+                aria-disabled="false"
+                type="submit"
+                style=""
+              >
+                <span class="">Autenticar-se</span>
+              </button>
+              <p class="to-sign">
+                não tenho conta,
+                <span @click.prevent="hideLoginShowRegisterToggle">Criar conta</span>
+                <i>&gt;&gt;</i>
+              </p>
+            </form>
+            <div class="el-overlay" style="z-index: 2016; display: none">
+              <div
+                role="dialog"
+                aria-modal="true"
+                aria-label="Esqueceu sua senha"
+                aria-describedby="el-id-8026-33"
+                class="el-overlay-dialog"
+                style="display: flex"
+              ></div>
+            </div>
+          </div>
+          <!---->
+        </div>
+        <div class="easy-login">
+          <!---->
+          <!---->
+        </div>
+      </div>
+      <!--v-if-->
+    </div>
+
+    <!-- <div
+      v-if="false"
       class="relative w-full max-w-3xl max-h-full bg-[var(--background-base)] rounded-lg shadow-lg border border-[var(--ci-secundary-color)]"
     >
       <div class="flex md:justify-between">
@@ -491,7 +575,8 @@
                 @click.prevent="hideLoginShowRegisterToggle"
                 class="text-sm w-full text-center flex justify-center items-center gap-1 border-b-2 border-transparent pb-2"
               >
-                <i class="fa-solid fa-user-plus trasform scale-60 mr-1 text-sm"></i>
+                <i class="fa-solid fa-user-plus trasform scale-60 mr-1 text-sm">
+                </i>
                 <p>Inscrever-se</p>
               </h5>
 
@@ -500,7 +585,8 @@
               >
                 <i
                   class="fa-solid fa-right-to-bracket trasform scale-60 mr-1 text-sm"
-                ></i>
+                >
+                </i>
                 <p>Acesso de membro</p>
               </h5>
             </div>
@@ -514,7 +600,8 @@
               >
                 <i
                   class="fa-solid fa-mobile-screen-button text-success-emphasis text-[var(--ci-primary-opacity-color)]"
-                ></i>
+                >
+                </i>
               </div>
               <input
                 required
@@ -538,7 +625,8 @@
               />
             </div>
             <p class="text-xs text-[var(--sub-text-color)]">
-              <i class="fa-duotone fa-lock"></i> Senha do Login
+              <i class="fa-duotone fa-lock">
+              </i> Senha do Login
             </p>
             <div
               class="relative mb-3 rounded-lg hover:border-[var(--ci-secundary-color)] focus:border-[var(--ci-secundary-color)]"
@@ -548,7 +636,8 @@
               >
                 <i
                   class="fa-regular fa-lock text-success-emphasis text-[var(--ci-primary-opacity-color)]"
-                ></i>
+                >
+                </i>
               </div>
               <input
                 required
@@ -573,11 +662,13 @@
                 <i
                   v-if="typeInputPassword === 'password'"
                   class="fa-regular fa-eye text-[var(--ci-primary-opacity-color)]"
-                ></i>
+                >
+                </i>
                 <i
                   v-if="typeInputPassword === 'text'"
                   class="fa-sharp fa-regular fa-eye-slash text-[var(--ci-primary-opacity-color)]"
-                ></i>
+                >
+                </i>
               </button>
             </div>
 
@@ -608,9 +699,11 @@
 
             <div class="w-full flex flex-col gap-2 items-center justify-center mt-3">
               <div class="flex items-center w-full">
-                <div class="flex-grow border-t border-[var(--ci-secundary-color)]"></div>
+                <div class="flex-grow border-t border-[var(--ci-secundary-color)]">
+                </div>
                 <p class="mx-2 text-xs text-white">Login Rápido</p>
-                <div class="flex-grow border-t border-[var(--ci-secundary-color)]"></div>
+                <div class="flex-grow border-t border-[var(--ci-secundary-color)]">
+                </div>
               </div>
               <div class="flex row gap-2 justify-center items-center">
                 <img
@@ -631,7 +724,8 @@
               @click.prevent="loginToggle"
               style="color: white; font-weight: 400; font-size: 1.6rem"
             >
-              <i class="fa-thin fa-circle-xmark"></i>
+              <i class="fa-thin fa-circle-xmark">
+              </i>
             </p>
 
             <p
@@ -639,12 +733,13 @@
               @click.prevent="loginToggle"
               style="color: white; font-weight: 400; font-size: 1.6rem"
             >
-              <i class="fa-thin fa-circle-xmark"></i>
+              <i class="fa-thin fa-circle-xmark">
+              </i>
             </p>
           </form>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div
@@ -653,7 +748,204 @@
     aria-hidden="true"
     class="fixed top-0 left-0 right-0 z-50 hidden overflow-x-hidden overflow-y-auto md:inset-0 h-screen md:h-[calc(100%-1rem)] max-h-full mr-2 ml-2"
   >
-    <div
+    <div v-if="true" class="el-dialog-div bg-[var(--background-base)]" tabindex="-1">
+      <p
+        class="roxLoginButtonMobile block"
+        @click.prevent="registerToggle"
+        style="color: white; font-weight: 400; font-size: 1.6rem"
+      >
+        <i class="fa-thin fa-circle-xmark"> </i>
+      </p>
+      <header class="el-dialog__header">
+        <span class="el-dialog__title"> </span>
+      </header>
+      <div class="el-dialog__body">
+        <i class="close-icon"> </i>
+        <img class="bg" src="https://pixrico.com/public/png/bg-dfc0da3a.png" alt="" />
+        <div class="tab-content">
+          <div @click.prevent="hideLoginShowRegisterToggle" class="tab">
+            Autenticar-se
+          </div>
+          <div class="tab active">Criar conta</div>
+        </div>
+        <div class="content-wrap">
+          <div>
+            <form
+              class="el-form"
+              @submit.prevent="registerSubmit"
+              method="post"
+              action=""
+            >
+              <input type="hidden" v-model="registerForm.email" value="" />
+              <input type="hidden" v-model="registerForm.agreement" value="true" />
+              <div class="el-form-item is-success is-required asterisk-left">
+                <div class="el-form-item__content">
+                  <div class="el-input el-input--suffix">
+                    <div class="el-input__wrapper">
+                      <input
+                        required
+                        type="text"
+                        v-model="registerForm.phone"
+                        @input="updateEmail"
+                        autocomplete="phone"
+                        name="phone"
+                        v-maska
+                        data-maska="[
+                          '(##) ####-####',
+                          '(##) #####-####'
+                        ]"
+                        class="el-input__inner"
+                        placeholder="Por favor, insira Número do Celular"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="el-form-item is-success is-required asterisk-left">
+                <div class="el-form-item__content">
+                  <div class="el-input el-input--suffix">
+                    <div class="el-input__wrapper">
+                      <input
+                        required
+                        type="text"
+                        name="name"
+                        v-model="registerForm.name"
+                        autocomplete="username"
+                        class="el-input__inner"
+                        placeholder="Digite seu nome/usuário"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="el-form-item is-success is-required asterisk-left">
+                <div class="el-form-item__content">
+                  <div class="el-input el-input--suffix">
+                    <div class="el-input__wrapper">
+                      <input
+                        class="el-input__inner"
+                        required
+                        :type="typeInputPassword"
+                        name="password"
+                        autocomplete="current-password"
+                        v-model="password"
+                        @input="evaluatePasswordStrength"
+                        placeholder="Digite sua senha de acesso"
+                      />
+                      <button
+                        type="button"
+                        @click.prevent="togglePassword"
+                        class="absolute inset-y-0 right-0 flex items-center pr-3.5"
+                      >
+                        <i
+                          v-if="typeInputPassword === 'password'"
+                          class="fa-regular fa-eye text-[var(--ci-primary-opacity-color)]"
+                        >
+                        </i>
+                        <i
+                          v-if="typeInputPassword === 'text'"
+                          class="fa-sharp fa-regular fa-eye-slash text-[var(--ci-primary-opacity-color)]"
+                        >
+                        </i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="strength flex gap-2 items-center">
+                <p class="text-xs text-white">Força</p>
+                <div>
+                  <span
+                    v-for="(spanClass, index) in spanClasses"
+                    :key="index"
+                    :class="spanClass"
+                    class="strength-bar"
+                  >
+                  </span>
+                </div>
+              </div>
+
+              <div class="el-form-item">
+                <div class="el-form-item__content">
+                  <div class="el-input el-input--suffix">
+                    <div class="el-input__wrapper">
+                      <input
+                        :type="typeInputPassword"
+                        name="password_confirmation"
+                        autocomplete="current-password"
+                        v-model="registerForm.password_confirmation"
+                        class="el-input__inner"
+                        required
+                        placeholder="Confirme a senha novamente, o mesmo que a senha"
+                      />
+                      <button
+                        type="button"
+                        @click.prevent="togglePassword"
+                        class="absolute inset-y-0 right-0 flex items-center pr-3.5"
+                      >
+                        <i
+                          v-if="typeInputPassword === 'password'"
+                          class="fa-regular fa-eye text-[var(--ci-primary-opacity-color)]"
+                        >
+                        </i>
+                        <i
+                          v-if="typeInputPassword === 'text'"
+                          class="fa-sharp fa-regular fa-eye-slash text-[var(--ci-primary-opacity-color)]"
+                        >
+                        </i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3 mt-4">
+                <div class="flex">
+                  <input
+                    id="link-checkbox"
+                    v-model="registerForm.term_a"
+                    name="term_a"
+                    required
+                    type="checkbox"
+                    value=""
+                    class="w-4 h-4 text-green-500 bg-gray-100 border-gray-300 rounded focus:ring-2 dark:bg-gray-200 dark:border-gray-100"
+                  />
+                  <label
+                    for="link-checkbox"
+                    class="ml-2 text-xs text-gray-900 dark:text-gray-300"
+                    >Tenho mais de 18 anos, li e aceito o<span
+                      class="text-[var(--sub-text-color)]"
+                      >⟪Acordo de Usuário⟫</span
+                    >
+                  </label>
+                </div>
+              </div>
+
+              <a href="#topo" class="forget">
+                <span>Esqueceu a senha ?</span>
+              </a>
+              <button class="el-button" aria-disabled="false" type="submit" style="">
+                <span class="">Registro</span>
+              </button>
+            </form>
+            <div class="el-overlay" style="z-index: 2016; display: none">
+              <div
+                role="dialog"
+                aria-modal="true"
+                aria-label="Esqueceu sua senha"
+                aria-describedby="el-id-8026-33"
+                class="el-overlay-dialog"
+                style="display: flex"
+              ></div>
+            </div>
+          </div>
+        </div>
+        <div class="easy-login"></div>
+      </div>
+    </div>
+
+    <!-- <div
+      v-if="false"
       class="relative w-full max-w-3xl max-h-full bg-[var(--background-base)] rounded-lg shadow-lg border border-[var(--ci-secundary-color)]"
     >
       <div class="flex md:justify-between h-full">
@@ -663,7 +955,8 @@
               <h5
                 class="text-sm w-full text-center flex justify-center items-center gap-1 text-[var(--sub-text-color)] border-b-2 border-[var(--sub-text-color)] pb-2"
               >
-                <i class="fa-solid fa-user-plus trasform scale-60 mr-1 text-sm"></i>
+                <i class="fa-solid fa-user-plus trasform scale-60 mr-1 text-sm">
+                </i>
                 <p>Inscrever-se</p>
               </h5>
 
@@ -673,7 +966,8 @@
               >
                 <i
                   class="fa-solid fa-right-to-bracket trasform scale-60 mr-1 text-sm"
-                ></i>
+                >
+                </i>
                 <p>Acesso de membro</p>
               </h5>
             </div>
@@ -684,7 +978,8 @@
               >
                 <i
                   class="fa-regular fa-user text-success-emphasis text-[var(--ci-primary-opacity-color)]"
-                ></i>
+                >
+                </i>
               </div>
               <input
                 type="text"
@@ -710,7 +1005,8 @@
               >
                 <i
                   class="fa-solid fa-mobile-screen-button text-[var(--ci-primary-opacity-color)]"
-                ></i>
+                >
+                </i>
               </div>
               <input
                 type="text"
@@ -721,9 +1017,9 @@
                                     '(##) #####-####'
                                   ]"
                 v-model="registerForm.phone"
+                @input="updateEmail"
                 autocomplete="phone"
                 class="input2 rounded-lg placeholder:text-xs hover:border-[var(--ci-secundary-color)] focus:border-[var(--ci-secundary-color)]"
-                @input="updateEmail"
                 style="
                   background: transparent;
                   color: var(--ci-gray-dark);
@@ -738,7 +1034,8 @@
             <input type="hidden" v-model="registerForm.email" value="" />
             <input type="hidden" v-model="registerForm.agreement" value="true" />
             <p class="text-xs text-[var(--sub-text-color)]">
-              <i class="fa-duotone fa-lock"></i> Cadastro de senha
+              <i class="fa-duotone fa-lock">
+              </i> Cadastro de senha
             </p>
             <div class="relative mb-3 rounded-lg">
               <div
@@ -746,7 +1043,8 @@
               >
                 <i
                   class="fa-regular fa-lock text-success-emphasis text-[var(--ci-primary-opacity-color)]"
-                ></i>
+                >
+                </i>
               </div>
               <input
                 :type="typeInputPassword"
@@ -772,11 +1070,13 @@
                 <i
                   v-if="typeInputPassword === 'password'"
                   class="fa-regular fa-eye text-[var(--ci-primary-opacity-color)]"
-                ></i>
+                >
+                </i>
                 <i
                   v-if="typeInputPassword === 'text'"
                   class="fa-sharp fa-regular fa-eye-slash text-[var(--ci-primary-opacity-color)]"
-                ></i>
+                >
+                </i>
               </button>
             </div>
 
@@ -788,7 +1088,8 @@
                   :key="index"
                   :class="spanClass"
                   class="strength-bar"
-                ></span>
+                >
+                </span>
               </div>
             </div>
 
@@ -798,7 +1099,8 @@
               >
                 <i
                   class="fa-regular fa-lock text-success-emphasis text-[var(--ci-primary-opacity-color)]"
-                ></i>
+                >
+                </i>
               </div>
               <input
                 :type="typeInputPassword"
@@ -823,11 +1125,13 @@
                 <i
                   v-if="typeInputPassword === 'password'"
                   class="fa-regular fa-eye text-[var(--ci-primary-opacity-color)]"
-                ></i>
+                >
+                </i>
                 <i
                   v-if="typeInputPassword === 'text'"
                   class="fa-sharp fa-regular fa-eye-slash text-[var(--ci-primary-opacity-color)]"
-                ></i>
+                >
+                </i>
               </button>
             </div>
 
@@ -848,7 +1152,8 @@
                   >Tenho mais de 18 anos, li e aceito o<span
                     class="text-[var(--sub-text-color)]"
                     >⟪Acordo de Usuário⟫</span
-                  ></label
+                  >
+                  </label
                 >
               </div>
             </div>
@@ -868,9 +1173,11 @@
 
             <div class="w-full flex flex-col gap-2 items-center justify-center mt-3">
               <div class="flex items-center w-full">
-                <div class="flex-grow border-t border-[var(--ci-secundary-color)]"></div>
+                <div class="flex-grow border-t border-[var(--ci-secundary-color)]">
+                </div>
                 <p class="mx-2 text-xs text-white">Registro vinculativo</p>
-                <div class="flex-grow border-t border-[var(--ci-secundary-color)]"></div>
+                <div class="flex-grow border-t border-[var(--ci-secundary-color)]">
+                </div>
               </div>
               <div class="flex row gap-2 justify-center items-center">
                 <img
@@ -886,21 +1193,14 @@
               </div>
             </div>
 
-            <!-- <div class="w-full flex flex-col gap-2 items-center justify-center mt-3">
-                            <div class="flex items-center w-full">
-                                <div class="flex-grow border-t border-[var(--ci-secundary-color)]"></div>
-                                <p class="mx-2 text-white">Login Rápido</p>
-                                <div class="flex-grow border-t border-[var(--ci-secundary-color)]"></div>
-                            </div>
-                            <img class="w-[40px] rounded-[50%]" :src="`/storage/rox/google-icon.png`" alt="Login com o Google"/>
-                        </div> -->
 
             <p
               class="roxRegisterButtonMobile block md:hidden"
               @click.prevent="registerToggle"
               style="color: white; font-weight: 400; font-size: 1.6rem"
             >
-              <i class="fa-thin fa-circle-xmark"></i>
+              <i class="fa-thin fa-circle-xmark">
+              </i>
             </p>
 
             <p
@@ -908,12 +1208,13 @@
               @click.prevent="registerToggle"
               style="color: white; font-weight: 400; font-size: 1.6rem"
             >
-              <i class="fa-thin fa-circle-xmark"></i>
+              <i class="fa-thin fa-circle-xmark">
+              </i>
             </p>
           </form>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div
@@ -930,7 +1231,7 @@
         <div class="flex justify-between w-full p-4">
           <h1 class="text-2xl font-bold">{{ $t("User data") }}</h1>
           <button @click.prevent="profileToggle" type="button" class="text-2xl">
-            <i class="fa-solid fa-xmark"></i>
+            <i class="fa-solid fa-xmark"> </i>
           </button>
         </div>
 
@@ -939,7 +1240,7 @@
           <!-- PROFILE INFO -->
           <div class="flex items-center self-center justify-between w-full">
             <button @click.prevent="like(profileUser.id)" type="button" class="heart">
-              <i class="fa-solid fa-heart"></i>
+              <i class="fa-solid fa-heart"> </i>
               <span class="ml-2">{{ profileUser.totalLikes }}</span>
             </button>
             <div
@@ -962,7 +1263,7 @@
                   type="button"
                   class="absolute bottom-0 right-0 text-3xl"
                 >
-                  <i class="fa-duotone fa-image"></i>
+                  <i class="fa-duotone fa-image"> </i>
                 </button>
               </div>
               <div class="relative">
@@ -982,8 +1283,8 @@
                 type="button"
                 class="bg-gray-200 hover:bg-gray-400 dark:bg-gray-600 hover:dark:bg-gray-700 w-10 h-10 rounded"
               >
-                <i v-if="!readonly" class="fa-sharp fa-light fa-pen"></i>
-                <i v-if="readonly" class="fa-solid fa-xmark"></i>
+                <i v-if="!readonly" class="fa-sharp fa-light fa-pen"> </i>
+                <i v-if="readonly" class="fa-solid fa-xmark"> </i>
               </button>
             </div>
           </div>
@@ -991,7 +1292,9 @@
           <div class="mt-3 shadow flex flex-col bg-gray-100 dark:bg-gray-900 rounded-lg">
             <div class="flex justify-between px-4 pt-4">
               <h1>
-                <span class="mr-2"><i class="fa-solid fa-chart-mixed"></i></span>
+                <span class="mr-2">
+                  <i class="fa-solid fa-chart-mixed"> </i>
+                </span>
                 {{ $t("Statistics") }}
               </h1>
             </div>
@@ -1062,9 +1365,11 @@
     v-if="showCustom"
     tabindex="-1"
     aria-hidden="false"
-    class="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto ml-4 mr-4"
+    class="fixed inset-0 z-999 flex items-center justify-center overflow-x-hidden overflow-y-auto ml-4 mr-4"
+    style="z-index: 9999;"
   >
-    <div class="relative w-full max-w-3xl max-h-full bg-base rounded-lg shadow-lg">
+    <div @click.prevent="customToggle" class="w-full h-full bg-[rgba(0,0,0,0.5)] absolute z-1"></div>
+    <div class="relative max-w-3xl max-h-full bg-base rounded-lg shadow-lg popup-start z-10">
       <div class="flex md:justify-between">
         <div class="w-full relative p-5" v-html="customContent"></div>
       </div>
@@ -1083,14 +1388,14 @@
           @click.prevent="customToggle"
           style="color: white; font-weight: 400; font-size: 1.6rem"
         >
-          <i class="fa-thin fa-circle-xmark"></i>
+          <i class="fa-thin fa-circle-xmark"> </i>
         </p>
         <p
           class="roxRegisterButtonMobile hidden md:block"
           @click.prevent="customToggle"
           style="color: white; font-weight: 400; font-size: 1.6rem"
         >
-          <i class="fa-thin fa-circle-xmark"></i>
+          <i class="fa-thin fa-circle-xmark"> </i>
         </p>
       </div>
     </div>
@@ -1124,7 +1429,7 @@ export default {
     widthLessThan450: {
       type: Boolean,
       required: false,
-    }
+    },
   },
   components: {
     CassinoGameCard,
@@ -1181,7 +1486,6 @@ export default {
   },
   setup() {
     const router = useRouter();
-    const widthMenor1330 = ref(true);
 
     return {
       router,
@@ -1283,12 +1587,9 @@ export default {
     const today = new Date().toISOString().split("T")[0];
 
     if (showModal !== "false" && lastShownDate !== today) {
-      // Mostrar o modal se as condições forem atendidas
-      // console.log(`${showModal} e ${lastShownDate}`);
       this.showCustom = true;
     } else {
       this.showCustom = false;
-      // console.log(`${showModal} e ${lastShownDate}`);
     }
 
     /*
@@ -1310,6 +1611,13 @@ export default {
     }
   },
   methods: {
+    async copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        console.error('Falha ao copiar texto: ', err);
+      }
+    },
     evaluatePasswordStrength() {
       const password = this.password;
       let strength = 0;
@@ -1514,7 +1822,7 @@ export default {
     },
     toggleMenu() {
       this.sidebarMenuStore.setSidebarToogle();
-      this.$emit('update:visible', !this.visible);
+      this.$emit("update:visible", !this.visible);
     },
     loginToggle: function () {
       this.showCustom = false;
@@ -1627,8 +1935,7 @@ export default {
     }
   },
   watch: {
-    visible(newVal) {
-    },
+    visible(newVal) {},
     searchTerm(newValue, oldValue) {
       this.getSearch();
     },
@@ -1652,7 +1959,7 @@ export default {
   background-repeat: repeat;
   background-size: auto;
 
-  z-index: 9999;
+  z-index: 100;
 }
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
@@ -1705,7 +2012,6 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  background-color: var(--ci-primary-opacity-color);
   color: #fff;
   z-index: 10000;
   padding: 3px;
@@ -1728,37 +2034,631 @@ export default {
   }
 }
 
-
 .arrow_side_bar {
-    width: 35px;
-    /* margin-right: 20px; */
-    transform: scaleX(-1);
+  width: 35px;
+  /* margin-right: 20px; */
+  transform: scaleX(-1);
 }
 
 .logo {
-    height: 36px;
+  height: 36px;
 }
 
 .btn {
-    display: flex;
-    justify-content: center;
-    align-items: center
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sign-in-up {
-    color: #03ffee;
-    padding: 0 8px;
-    height: 28px;
-    border: .5px solid #03ffee;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 12px;
-    cursor: pointer
+  color: #03ffee;
+  padding: 0 8px;
+  height: 28px;
+  border: 0.5px solid #03ffee;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 .in-up-2 {
-    margin-left: 8px;
-    background: #03ffee;
-    color: #000
+  margin-left: 8px;
+  background: #03ffee;
+  color: #000;
+}
+
+.el-dialog__header {
+  color-scheme: light;
+  font-family: Montserrat-Medium, Montserrat-Bold, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  user-select: none;
+  text-align: center;
+  color: #b6b5c7;
+  box-sizing: border-box;
+  margin-right: 16px;
+  padding-top: 12px;
+  padding-bottom: 24px;
+  display: none;
+}
+
+.el-dialog__title {
+  color-scheme: light;
+  font-family: Montserrat-Medium, Montserrat-Bold, Helvetica, Arial, sans-serif;
+  user-select: none;
+  text-align: center;
+  box-sizing: border-box;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 22px;
+  color: #b6b5c7;
+}
+
+.el-dialog__body {
+  color-scheme: light;
+  font-family: Montserrat-Medium, Montserrat-Bold, Helvetica, Arial, sans-serif;
+  user-select: none;
+  box-sizing: border-box;
+  text-align: initial;
+  padding: 0;
+  max-height: 80vh;
+  overflow-y: overlay;
+}
+
+.tab-content {
+  color-scheme: light;
+  font-family: Montserrat-Medium, Montserrat-Bold, Helvetica, Arial, sans-serif;
+  user-select: none;
+  text-align: initial;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 327px;
+  padding: 4px;
+  height: 40px;
+  margin: 28px auto 20px;
+  background: #201d2e;
+  border-radius: 8px;
+}
+
+.tab {
+  cursor: pointer;
+  width: 50%;
+  height: 32px;
+  font-size: 14px;
+  line-height: 32px;
+  text-align: center;
+  color: #555467;
+  transition: all 0.3s linear;
+}
+
+.active {
+  background: #2d2941;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #b6b5c7;
+}
+
+.el-dialog-div {
+  width: 380px;
+  color-scheme: light;
+  font-family: Montserrat-Medium, Montserrat-Bold, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  user-select: none;
+  position: relative;
+  border-radius: 30px;
+  box-sizing: border-box;
+  text-align: center;
+  margin: auto;
+  color: #b6b5c7;
+  padding: 0 !important;
+}
+
+.content-wrap {
+  padding: 0 32px 24px;
+}
+
+.el-form {
+  color-scheme: light;
+  font-family: Montserrat-Medium, Montserrat-Bold, Helvetica, Arial, sans-serif;
+  user-select: none;
+  text-align: initial;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.el-form-item {
+  color-scheme: light;
+  font-family: Montserrat-Medium, Montserrat-Bold, Helvetica, Arial, sans-serif;
+  user-select: none;
+  text-align: initial;
+  box-sizing: border-box;
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.el-form-item__content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex: 1;
+  line-height: 32px;
+  position: relative;
+  font-size: 14px;
+  min-width: 0;
+}
+
+.el-input {
+  color-scheme: light;
+  font-family: Montserrat-Medium, Montserrat-Bold, Helvetica, Arial, sans-serif;
+  user-select: none;
+  text-align: initial;
+  position: relative;
+  display: inline-flex;
+  box-sizing: border-box;
+  vertical-align: middle;
+  width: 100%;
+  height: 49px;
+  border-radius: 8px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.el-input__wrapper {
+  color-scheme: light;
+  font-family: Montserrat-Medium, Montserrat-Bold, Helvetica, Arial, sans-serif;
+  user-select: none;
+  text-align: initial;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  background-image: none;
+  transform: translateZ(0);
+  background-color: #201d2e;
+  padding: 1px 16px;
+  box-shadow: none;
+}
+
+.el-input__inner {
+  color-scheme: light;
+  user-select: none;
+  margin: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  width: 100%;
+  flex-grow: 1;
+  font-size: inherit;
+  padding: 0;
+  outline: 0;
+  border: none;
+  background: 0 0;
+  box-sizing: border-box;
+}
+
+.forget {
+  font-size: 14px;
+  text-align: center;
+  color: #03ffee;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.el-button {
+  margin: 0;
+  font-style: inherit;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+  transition: 0.1s;
+  user-select: none;
+  vertical-align: middle;
+  border: 1px solid #dcdfe6;
+  padding: 12px 19px;
+  border-color: rgb(6, 208, 194);
+  background-color: rgb(6, 208, 194);
+  outline: 0;
+  width: 100%;
+  height: 52px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #15131e;
+  margin-top: 12px;
+}
+
+.el-button:hover {
+  border-color: rgb(79, 255, 243);
+  background-color: rgb(79, 255, 243);
+}
+
+.to-sign {
+  margin-top: 24px;
+  font-weight: 300;
+  font-size: 14px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.to-sign span {
+  margin-left: 2px;
+  margin-right: 3px;
+  background: linear-gradient(75.2deg, #2d4df5 3.72%, #00ff7c 166.62%);
+  border-radius: 2px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.to-sign i {
+  font-size: 12px;
+}
+
+.min-info {
+  display: flex;
+  align-items: center;
+  padding-right: 8px;
+}
+
+.money-data {
+  cursor: pointer;
+}
+
+.userinfo-item {
+  display: flex;
+  align-items: center;
+  background: #15131e;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+
+.account-money {
+  font-style: italic;
+  font-weight: 700;
+  font-size: 16px;
+  color: #03ffee;
+}
+
+.min-info__refresh {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
+}
+
+.user-line {
+  margin: 0 16px;
+  width: 2px;
+  height: 13px;
+  background: rgba(85, 84, 103, 0.4);
+}
+
+.user-name {
+  cursor: pointer;
+}
+.userinfo-item {
+  display: flex;
+  align-items: center;
+  background: #15131e;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+.msg-icon {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+.user-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.level {
+  padding: 0 2px;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 14px;
+  color: #e9af7e;
+  margin-left: 8px;
+  margin-right: 4px;
+}
+
+.dropdown-user-div {
+  position: absolute;
+  top: 80px !important;
+  left: 50px !important;
+  width: 500px;
+}
+
+.dropdown-user-div-2 {
+  color-scheme: light;
+  font-family: Montserrat-Medium, Montserrat-Bold, Helvetica, Arial, sans-serif;
+  user-select: none;
+  word-wrap: break-word;
+  visibility: visible;
+  min-width: 150px;
+  line-height: 1.4;
+  text-align: justify;
+  word-break: break-all;
+  box-sizing: border-box;
+  color: #ffffff;
+  padding: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #201d2e;
+  box-shadow: 0 15px 35px #222441;
+  border-radius: 16px;
+  border: none;
+  z-index: 2017;
+  width: 375px;
+  position: absolute;
+  inset: 56px auto auto 1148px;
+}
+
+.content {
+  overflow: overlay;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0 24px;
+  background: #1a1725;
+}
+
+.el-popper__arrow {
+  top: -5px;
+}
+
+.card {
+  width: 319px;
+  padding: 16px 20px;
+  background-image: url(/storage/rox/vip-bg.png);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+}
+
+.info_wrap {
+  position: relative;
+  width: 343px;
+  margin-top: -8px;
+  padding: 16px 18px;
+  background-image: url(/storage/rox/subtract.png);
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+}
+
+.card .avatar {
+  margin-right: 12px;
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.card .avatar .el-avatar--circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.el-avatar {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  text-align: center;
+  overflow: hidden;
+  color: #ffffff;
+  background: #c0c4cc;
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+}
+
+header .card .phone {
+  width: 210px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #b6b5c7;
+  margin-top: 0.2em;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  margin-top: 0.2em;
+}
+
+.el-badge {
+  position: relative;
+  vertical-align: middle;
+  display: inline-block;
+  width: fit-content;
+}
+
+.el-badge__content {
+  color-scheme: light;
+  font-family: Montserrat-Medium, Montserrat-Bold, Helvetica, Arial, sans-serif;
+  user-select: none;
+  word-wrap: break-word;
+  visibility: visible;
+  line-height: 1.4;
+  text-align: justify;
+  word-break: break-all;
+  cursor: pointer;
+  box-sizing: border-box;
+  color: white;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  white-space: nowrap;
+  border: 1px solid #ffffff;
+  background-color: #f56c6c;
+  position: absolute;
+  top: 0;
+  transform: translateY(-50%) translate(100%);
+  height: 8px;
+  width: 8px;
+  padding: 0;
+  border-radius: 50%;
+  right: 5px;
+}
+
+header .card .phone .img {
+  display: inline-block;
+  width: 1em;
+  height: 1.1em;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAdCAYAAABIWle8AAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAD1SURBVHgB7ZVPzsFAGMafp183X2LRI9QJxFJsat1IOAGO4AS4gRtwAzZYigW2bqBH6Ja08xol4l9KaWLT32rmzTu/vDOLeYAU4X1hNFrbphnYeJMgyG3q9aJ/I5vN1raEGOiKg0SIL2DfdUs9XkSCOQQ2PkSJtI1ooZTzjegIiU4ko9DBlxC0DKSIeb0RpXputdxFAqL3Vtge16lOlskyWSbLZD+U3XyO/GNhMlk2kYAwFMsgH2UQ1vRfXnt+THQ20rqv8ip5jZMDPmLQedra7f/zOjW8uL5z1HEc16QYeHiJLC5DTqeroR6xEdP89JpnvN0elQPhyU1St96BbAAAAABJRU5ErkJggg==);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+header .card .icons .level {
+  width: 36px;
+  height: 16px;
+  font-style: italic;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  color: #2d2941;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAAAgCAYAAACxSj5wAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAFkSURBVHgB7drBUcMwEAXQvyvOmZRgHzhwIlRAUgGtpANIBYROoALTgX2GYZwOCBwZx4tkB2NZcgXad8hYlk5/5HUkmTCjFn5sQVskQSqAqh+cdleEw7iHYsPfBWuGKZAk2n+j2d0Qjq7FsSEMXiFZsl2Ai1KwdC2OD6JbJI1WC1zcd1ex7g/h0g1C4mwN3pjpzdpOLQHvoSz5Ch6xBkh+5vwh0F0QUNoFOpAFAYm9CTWIvMXoGmoQBERagzxeQG/ShbOEGrDfMBmUZ/KIyRrKMwlIC/SUF5AW6NAQUN2vXrVATwwB6RIjjv8vdIkRM6pBqe8BxY0Ckgwq0G2YuQLdwnxCBboZpAV6Hvc/WqDndAHpHtC8c5HWJUacVF1AusSYQxW5PSADU0IFGKecdQ8oTkBPuT2nZ90DipHKoHlwV2zfYEeogZs5jHaTnz9eoP5fNBdpHzXLwZ4mv9jJ8nxJzeu45xe80lF78lyV2QAAAABJRU5ErkJggg==);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.el-icon {
+  height: 1em;
+  width: 1em;
+  line-height: 1em;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  fill: currentColor;
+  color: inherit;
+  font-size: inherit;
+}
+
+.vip {
+  width: 22.06px;
+  margin-right: 4px;
+}
+
+.el-collapse-item__header {
+  display: flex;
+  align-items: center;
+  height: 52px;
+  line-height: 52px;
+  background-color: #15131e;
+  color: #b6b5c7;
+  cursor: pointer;
+  border-bottom: 1px solid none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: border-bottom-color .3s;
+  outline: 0;
+  padding: 0 16px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+footer>div {
+  cursor: pointer;
+  border: 1px solid #555467;
+  border-radius: 1em;
+  padding: 0 16px;
+}
+
+footer {
+  align-items: center;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 18px;
+  font-size: 14px;
+  color: #555467;
+}
+
+.list-wrap {
+    padding-bottom: 16px;
+    width: 100%;
+}
+
+.title-profile-option {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 1000;
+}
+
+header .card h2 {
+    margin-top: 4px;
+    font-style: italic;
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 24px;
+    color: #fff;
+}
+
+.icon-copy {
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 4px;
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABsAAAAcCAYAAACQ0cTtAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHHSURBVHgBxZZNTsJAFIDfmxIkwUWP0BuIK8MK2KJEewM8gXgCuIE3EDhBiRVZSmKEJXiDcgJx4aL8zPMNBBINpUML+G0Gpm/mY4a+eYMQAccZmMnktyUlmUExQuB4Mkl7tn0+XvUh7IDrvuUNI1EFgrz2IISu78OtbWc9bdnLU+8GDHQgInM5KwjtaAMfIAaGSNS1ZK7bz3NjQTwsLZmBlIE9kNAJEihIAnkbHlmwAzu9jZtQW8wrLwNiLkweW7ai0+mrvHMQMKMlWwyYUYX3LYdAFj82t8zv8WiP20axmG2qDsd5NU+SqQEErHAtW+YR1EMEQT+5y8LCYp7nXoW3dGOaiNWKlnkUQaTgE6XtvtfUR3/qN4LCFjIp53mImUcoxJ1qbbswJqJhoAwhcQ3xMR2Hd2gxH3wEygAp2vb9IZ00ts6jfzZq4Ev/eLJtEKeI1nG1B1N3Mk3dH0RGhB4itfhAHUnAVqmU7ar+g8guS9napv6j/Wf/JJM0gj0wm50OIVQGsDVIk1/XtkDZ8vCkT4gBSdkMi1mXmHa7X+YvjxCloHIeFa+WJUZLplClhuZU5Ww/Q8SQSw59AeGQr75cPC9CV3V0fgC2TpgWGlQu1wAAAABJRU5ErkJggg==);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+header .card .phone > div:last-child {
+  color: #03ffee;
+  border: 1px solid #03ffee;
+  padding: 0 10px;
+  border-radius: 1em;
+  cursor: pointer;
+}
+
+.popup-start {
+  width: 420px;
+}
+
+</style>
+
+<style>
+.fa-circle-xmark:hover {
+  transform: rotate(180deg) !important;
+}
+.fa-circle-xmark {
+  cursor: pointer;
+  color: rgb(81, 158, 209) !important;
+  background-color: #0000004f !important;
+  border-radius: 50% !important;
 }
 </style>

@@ -1316,7 +1316,7 @@ input:focus, input:hover
 
 .sidebar-color{
     background-color: var(--sidebar-color);
-    z-index: 9999;
+    z-index: 999;
 }
 :is(.dark .sidebar-color) {
     background-color: var(--sidebar-color);
