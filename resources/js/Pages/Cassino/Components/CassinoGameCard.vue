@@ -4,7 +4,7 @@
       @mouseover="showIcon = true"
       @mouseleave="showIcon = false">
       <div class="relative w-full h-full">
-        <img :src="game.distribution === 'kagaming' ? game.cover : `/storage/`+ game.cover" alt="" class="w-full" style="border-radius: 15px;">
+        <img :src="game.distribution === 'kagaming' ? game.cover : `/storage/`+game.cover" alt="" class="w-full" style="border-radius: 15px;">
         <div v-if="showIcon" class="bdc">
           <i class="fa-solid fa-circle-play"></i>
         </div>
@@ -19,16 +19,15 @@ import { RouterLink } from "vue-router";
 export default {
   props: ['index', 'game'],
   components: { RouterLink },
-  data() {
-    return {
-      showIcon: false
-    }
-  },
+    data() {
+        return {
+        showIcon: false
+        }
+    },
     methods: {
         getRedirectRoute() {
-            // Defina o mapeamento entre ID/slug e o componente desejado
             const componentMap = {
-              50 : { slug: 126, component: 'TigrinhoPage' },
+                50: { slug: 126, component: 'TigrinhoPage' },
             };
 
             const match = componentMap[this.game.id];
@@ -36,7 +35,7 @@ export default {
             console.log(this.game.id, this.game.game_code);
 
             if (match && String(match.slug) === String(this.game.game_code)) {
-            return { name: match.component };
+                return { name: match.component };
             }
 
             return { name: 'casinoPlayPage', params: { id: this.game.id, slug: this.game.game_code } };

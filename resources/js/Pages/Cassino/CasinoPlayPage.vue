@@ -93,7 +93,7 @@ export default {
         document.addEventListener('fullscreenchange', () => {
             state.fullscreen = !!document.fullscreenElement;
         });
-
+        
         return {
             ...toRefs(state),
             toggleFullscreen,
@@ -189,6 +189,7 @@ export default {
 
             return await HttpApi.get('games/single/' + _this.gameId)
                 .then(async response => {
+                    
                     if (response.data?.action === 'deposit') {
                         _this.$nextTick(() => {
                             _this.router.push({ name: 'profileDeposit' });
@@ -226,7 +227,7 @@ export default {
         }
     },
     watch: {
-
+        
     },
 };
 </script>

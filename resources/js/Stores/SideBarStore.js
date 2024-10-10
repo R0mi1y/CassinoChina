@@ -22,3 +22,5 @@ export const sidebarStore = defineStore("sidebar", {
         },
     },
 });
+
+export default sidebarStore;

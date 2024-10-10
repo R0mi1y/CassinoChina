@@ -465,7 +465,7 @@ export default {
     this.loadScrollingText();
     this.startLogging();
     this.xorG();
-
+    
     this.inserirScript();
     setTimeout(() => {
       this.animateValue();

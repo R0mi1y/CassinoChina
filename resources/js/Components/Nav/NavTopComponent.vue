@@ -1404,7 +1404,7 @@
 
 <script>
 import { RouterLink, useRoute } from "vue-router";
-import { sidebarStore } from "@/Stores/SideBarStore.js";
+import SidebarStore from '@/stores/sidebarStore';
 import { Modal } from "flowbite";
 import { useAuthStore } from "@/Stores/Auth.js";
 import { useToast } from "vue-toastification";
@@ -1539,7 +1539,8 @@ export default {
       return name.length > 10 ? name.substr(0, 10) + "..." : name;
     },
   },
-  unmounted() {},
+  unmounted() {
+  },
   mounted() {
     /*
      * $targetEl: required
@@ -1608,6 +1609,10 @@ export default {
 
     if (window.location.href.includes("register")) {
       this.registerToggle();
+    }
+    
+    if (this.$route.params.action && this.$route.params.action === 'openlogin' || window.location.href.includes('/home/login')) {
+      this.loginToggle();
     }
   },
   methods: {

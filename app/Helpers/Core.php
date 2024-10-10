@@ -911,7 +911,7 @@ private static function PayWin($user, $affiliate, $type, $amount, $changeBonus)
             $custom = Cache::get('custom');
         }else{
             $custom = CustomLayout::first();
-            // Cache::put('custom', $custom);
+            Cache::put('custom', $custom);
         }
 
         return $custom;
