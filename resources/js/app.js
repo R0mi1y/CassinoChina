@@ -15,18 +15,18 @@ import "@/index.css";
 
 import App from "./App.vue";
 import { useAuthStore } from "@/Stores/Auth.js";
-import { registerSW } from 'virtual:pwa-register';
+// import { registerSW } from 'virtual:pwa-register';
 
-const updateSW = registerSW({
-    onNeedRefresh() {
-        // Código para informar o usuário que uma nova versão está disponível
-        alert('Há uma nova versão está disponível!');
-    },
-    onOfflineReady() {
-        // Código para informar o usuário que o app está pronto para funcionar offline
-        alert('O app está pronto para funcionar offline!');
-    }
-});
+// const updateSW = registerSW({
+//     onNeedRefresh() {
+//         // Código para informar o usuário que uma nova versão está disponível
+//         alert('Há uma nova versão está disponível!');
+//     },
+//     onOfflineReady() {
+//         // Código para informar o usuário que o app está pronto para funcionar offline
+//         alert('O app está pronto para funcionar offline!');
+//     }
+// });
 
 /**
  * APP

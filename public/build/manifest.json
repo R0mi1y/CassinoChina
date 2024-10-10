@@ -40,15 +40,15 @@
     "isDynamicEntry": true,
     "src": "lang/php_pt_BR.json"
   },
+  "lang/php_vendor.json": {
+    "file": "assets/php_vendor-92955918.js",
+    "isDynamicEntry": true,
+    "src": "lang/php_vendor.json"
+  },
   "lang/pt_BR.json": {
     "file": "assets/pt_BR-54b39037.js",
     "isDynamicEntry": true,
     "src": "lang/pt_BR.json"
-  },
-  "node_modules/workbox-window/build/workbox-window.prod.es5.mjs": {
-    "file": "assets/workbox-window.prod.es5-c46a1faa.js",
-    "isDynamicEntry": true,
-    "src": "node_modules/workbox-window/build/workbox-window.prod.es5.mjs"
   },
   "resources/css/app.css": {
     "file": "assets/app-4ed993c7.js",
@@ -56,7 +56,7 @@
     "src": "resources/css/app.css"
   },
   "resources/js/app.css": {
-    "file": "assets/app-87902bd8.css",
+    "file": "assets/app-9087dbd7.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
@@ -67,18 +67,18 @@
       "assets/sport-small-5e566ee2.png"
     ],
     "css": [
-      "assets/app-87902bd8.css"
+      "assets/app-9087dbd7.css"
     ],
     "dynamicImports": [
-      "node_modules/workbox-window/build/workbox-window.prod.es5.mjs",
       "lang/en.json",
       "lang/es.json",
       "lang/php_en.json",
       "lang/php_es.json",
       "lang/php_pt_BR.json",
+      "lang/php_vendor.json",
       "lang/pt_BR.json"
     ],
-    "file": "assets/app-403de4f3.js",
+    "file": "assets/app-9d742f3e.js",
     "isEntry": true,
     "src": "resources/js/app.js"
   }
