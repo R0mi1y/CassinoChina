@@ -3,7 +3,7 @@
         <p class="title">Fornecedores de jogos</p>
         <div class="con-box">
           <div class="con-item btn">
-            <img :src="`/storage/rox/9faf62e8.png`" />
+            <img src="https://pixrico.com/public/png/1-9faf62e8.png" />
           </div>
           <div class="con-item btn">
             <img
@@ -68,7 +68,7 @@
         Não somos responsáveis por violar suas leis locais em relação a jogos online.
         Jogue com responsabilidade e divirta-se no PIXRICO.
       </div>
-      
+
       <div class="page-to">
         <span>
           <b>Regulamento</b>
@@ -80,8 +80,8 @@
           <b>Fale Conosco</b>
         </span>
       </div>
-      
-      <div class="foot-right">Casino＠ 2023 Todos os direitos.</div>
+
+      <div class="foot-right">Casino＠ 2024 Todos os direitos.</div>
 </template>
 
 <style>

@@ -298,4 +298,4 @@
         
     </body>
 </html>
-<?php /**PATH C:\Users\nevesfg\Desktop\FRONTEND\Outros Projetos\CassinoChina\resources\views/layouts/app.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\nevesfg\Desktop\FRONTEND\Outros Projetos\atual\CassinoChina\resources\views/layouts/app.blade.php ENDPATH**/ ?>
