@@ -11,16 +11,15 @@
       <div class="flex items-center justify-between w-full">
         <div class="ml-4 flex items-center justify-between" style="">
           <button
-            class="mr-5 ml-5 fa-solid items-center text-sm arrow_side_bar"
+            class="fa-solid items-center text-sm arrow_side_bar"
             @click="toggleMenu"
           >
             <img :src="`/storage/rox/arrow_side_bar.png`" alt="Close Menu" />
           </button>
           <img
-            v-show="!widthLessThan450"
             :src="`/storage/rox/logo.png`"
             alt="News"
-            class="logo ml-5"
+            class="logo ml-5 show-on-large-1"
           />
         </div>
 
@@ -59,7 +58,7 @@
                   class="user-avatar"
                   alt=""
                 />
-                <span class="level">{{ truncatedName }}</span>
+                <span class="level show-on-large">{{ truncatedName }}</span>
                 <svg viewBox="0 0 1024 1024" width="1.2em" height="1.2em">
                   <path
                     fill="currentColor"
@@ -386,12 +385,12 @@
               </div>
 
               <div
-                v-if="!isLoadingSearch"
+                v-if="!isLoadingSearch && games"
                 class="mt-8 grid grid-cols-3 md:grid-cols-6 gap-4 py-5"
               >
                 <CassinoGameCard
-                  v-if="games"
                   v-for="(game, index) in games?.data"
+                  v-bind:key="index"
                   :index="index"
                   :title="game.game_name"
                   :cover="game.cover"
@@ -1404,7 +1403,7 @@
 
 <script>
 import { RouterLink, useRoute } from "vue-router";
-import SidebarStore from '@/stores/sidebarStore';
+import { sidebarStore } from "@/Stores/SideBarStore.js";
 import { Modal } from "flowbite";
 import { useAuthStore } from "@/Stores/Auth.js";
 import { useToast } from "vue-toastification";
@@ -2041,10 +2040,20 @@ export default {
 
 .arrow_side_bar {
   width: 35px;
-  /* margin-right: 20px; */
+  margin-right:5px;
+  margin-left: 5px;
   transform: scaleX(-1);
 }
 
+@media screen and (max-width: 480px) {
+  .arrow_side_bar {
+    margin-right: 0px;
+    margin-left: 0px;
+    width: 35px;
+    transform: scaleX(-1);
+  }
+}
+  
 .logo {
   height: 36px;
 }
@@ -2315,6 +2324,7 @@ export default {
 .min-info {
   display: flex;
   align-items: center;
+  max-height: 24px;
   padding-right: 8px;
 }
 
@@ -2652,6 +2662,24 @@ header .card .phone > div:last-child {
 
 .popup-start {
   width: 420px;
+}
+
+.show-on-large {
+  display: none;
+}
+.show-on-large-1 {
+  display: none;
+}
+
+@media (min-width: 700px) {
+  .show-on-large {
+    display: inline; 
+  }
+}
+@media (min-width: 600px) {
+  .show-on-large-1 {
+    display: inline; 
+  }
 }
 
 </style>

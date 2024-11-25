@@ -23,13 +23,15 @@
                   @init="onCarouselInit(index)"
                   @slide-start="onSlideStart(index)"
         >
-            <Slide v-if="isLoading" v-for="(i, iloading) in 10" :index="iloading">
+        <div v-if="isLoading">
+            <Slide v-for="(i, iloading) in 10" :index="iloading" v-bind:key="iloading">
                 <div  role="status" class="w-full flex items-center justify-center h-48 mr-6 max-w-sm bg-gray-300 rounded-lg animate-pulse dark:bg-gray-700 text-4xl">
                     <i class="fa-duotone fa-gamepad-modern"></i>
                 </div>
             </Slide>
-
-            <Slide v-if="category.games_slotgrator && !isLoading" v-for="(game, igame) in category.games_slotgrator" :index="igame">
+        </div>
+        <div v-if="category.games_slotgrator && !isLoading">
+            <Slide v-for="(game, igame) in category.games_slotgrator" :index="igame" v-bind:key="igame">
                 <CassinoGameCard
                     :index="igame"
                     :title="game.name"
@@ -38,6 +40,7 @@
                     type="slotegrator"
                 />
             </Slide>
+        </div>
         </Carousel>
     </div>
 </template>

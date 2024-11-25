@@ -434,7 +434,7 @@ export default {
       isPlaying: false,
       playIconClass: "fa-play",
       audioSource: "/storage/rox/musics/1rox.mp3",
-      sidebar: false,
+      sidebar: true,
       isLoading: true,
       modalMission: null,
       setting: null,
@@ -565,8 +565,8 @@ export default {
 
       if (isWidthLessThan1330 !== this.widthMenor1330) {
         this.widthMenor1330 = isWidthLessThan1330;
-        this.sidebarMenuStore.setSidebarStatus(isWidthLessThan1330);
-        this.$emit("update:visible", !isWidthLessThan1330);
+        // this.sidebarMenuStore.setSidebarStatus(isWidthLessThan1330);
+        // this.$emit("update:visible", !isWidthLessThan1330);
       }
     },
     closeMusicModal() {
@@ -1079,7 +1079,7 @@ input[type="range"].styled-range {
   left: 0;
   right: 0;
   bottom: 0;
-  width: 240px;
+  width: 100%;
   height: 80px;
   z-index: 1;
 }
@@ -1094,7 +1094,7 @@ input[type="range"].styled-range {
   position: absolute;
   left: 0;
   top: 0;
-  width: 200px;
+  width: 90%;
   height: 200px;
   border-radius: 50%;
   filter: blur(var(--blur, 8px));

@@ -43,7 +43,7 @@
             </Slide>
 
             <template #addons>
-              <Navigation />
+              <!-- <Navigation /> -->
               <Pagination />
             </template>
           </Carousel>
@@ -111,6 +111,7 @@
             v-show="selectedCategory === category.slug || selectedCategory === 'all'"
             class="w-full"
             v-for="(category, index) in categories"
+            v-bind:key="index"
           >
             <div
               v-if="'games' in category && category.games.length > 0"

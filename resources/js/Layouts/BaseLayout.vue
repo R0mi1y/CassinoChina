@@ -99,7 +99,7 @@ import { onMounted } from "vue";
 
 import { useAuthStore } from "@/Stores/Auth.js";
 import { missionStore } from "@/Stores/MissionStore.js";
-import { sidebarStore } from '@/stores/sidebarStore' // Ajuste o caminho conforme necessário
+import { sidebarStore } from "@/Stores/SideBarStore.js";
 
 import NavTopComponent from "@/Components/Nav/NavTopComponent.vue";
 import SideBarComponent from "@/Components/Nav/SideBarComponent.vue";
@@ -133,7 +133,7 @@ export default {
             tabsMission: null,
             modalMission: null,
             modelSidebar: true,
-            visible: true,
+            visible: false,
             screenWidth: window.innerWidth,
             isWidthLessThan1330: window.innerWidth < 1330,
             widthLessThan450: window.innerWidth < 450,
